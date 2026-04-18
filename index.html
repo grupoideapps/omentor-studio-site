@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-root=".">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omentor.Studio — Estratégia, site e posts prontos para especialistas</title>
+  <meta name="description" content="O processo que transforma o que você sabe em presença digital completa — estratégia, site e posts prontos para publicar. Metodologia de Luan Bonadie, 10 anos, 140+ especialistas.">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<svg class="icon-sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;left:-9999px;overflow:hidden">
+  <symbol id="icon-pillar-strategy" viewBox="0 0 64 64">
+    <path d="M 15 11L 53 11C 53 11 57 11 57 15L 57 53C 57 53 57 57 53 57L 15 57C 15 57 11 57 11 53L 11 15C 11 15 11 11 15 11M 11 26L 17.992001 26M 11 45L 21 45M 42 11L 42 20M 44 32L 44 41M 26 11L 26 20M 21 45C 21 47.761425 23.238577 50 26 50C 28.761423 50 31 47.761425 31 45C 31 42.238575 28.761423 40 26 40C 23.238577 40 21 42.238575 21 45M 46 32L 26 32L 17.992001 26L 26 20L 46 20L 46 32ZM 39.5 41L 47.5 41L 47.5 49L 39.5 49ZM 31 45L 39.5 45M 47.5 45L 57 45M 44 49L 44 57M 26 32L 26 40M 26 50L 26 57M 46 26L 57 26"/>
+  </symbol>
+  <symbol id="icon-pillar-identity" viewBox="0 0 64 64">
+    <path d="M 20.768 34.295998L 20.768 13.524C 20.768 12.419431 21.663429 11.524 22.768 11.524L 54.015999 11.524C 55.120571 11.524 56.015999 12.419431 56.015999 13.524L 56.015999 54.476002C 56.015999 55.58057 55.120571 56.476002 54.015999 56.476002L 43.104 56.476002M 13.984 40.042L 34.591999 40.042C 34.591999 40.042 36.591999 40.042 36.591999 42.042L 36.591999 54.464001C 36.591999 54.464001 36.591999 56.464001 34.591999 56.464001L 13.984 56.464001C 13.984 56.464001 11.984 56.464001 11.984 54.464001L 11.984 42.042C 11.984 42.042 11.984 40.042 13.984 40.042M 25.397999 19.312C 25.398001 21.132332 26.873671 22.608002 28.694 22.608002C 30.514332 22.608002 31.990002 21.132332 31.990002 19.312C 31.990002 17.491671 30.514332 16.016001 28.694 16.016001C 26.873671 16.016001 25.398001 17.491671 25.398001 19.312M 15.746 46.222C 15.746 47.526497 16.803503 48.584 18.108 48.584C 19.412497 48.584 20.470001 47.526497 20.470001 46.222C 20.470001 44.917503 19.412497 43.860001 18.108 43.860001C 16.803503 43.860001 15.746 44.917503 15.746 46.222M 39.256001 17.624001L 50.113998 17.624001M 39.256001 23.931999L 50.113998 23.931999M 22.818001 51.251999L 31.188 51.251999"/>
+  </symbol>
+  <symbol id="icon-pillar-site" viewBox="0 0 64 64">
+    <path d="M 33.5 31.959999L 42.5 22.959999M 43.68 15.780001C 42.92392 16.531593 42.499157 17.553911 42.5 18.619999L 42.5 22.959999L 47.84 22.959999C 48.90609 22.960846 49.928406 22.536079 50.68 21.779999L 55.5 16.959999L 48.5 16.959999L 48.5 10.96ZM 39.5 56.959999L 27.5 56.959999C 29.217556 54.620441 30.255709 51.852032 30.5 48.959999L 36.5 48.959999C 36.756348 51.849304 37.793324 54.614571 39.5 56.959999ZM 24.540001 57.040001L 43.5 56.959999M 12.5 42.959999L 54.5 42.959999M 54.5 26.959999L 54.5 46C 54.5 47.656857 53.156857 49 51.5 49L 15.5 49C 13.843145 49 12.5 47.656857 12.5 46L 12.5 20C 12.5 18.343147 13.843145 17 15.5 17L 34.34 17M 26.5 31.959999C 26.500002 35.825996 29.634008 38.959999 33.5 38.959999C 37.365993 38.959999 40.5 35.825996 40.5 31.960001C 40.5 28.094007 37.365993 24.960001 33.5 24.960001C 29.634008 24.960001 26.500002 28.094007 26.500002 31.960001"/>
+  </symbol>
+  <symbol id="icon-pillar-posts" viewBox="0 0 64 64">
+    <path d="M 33 45.001999C 33 51.629417 38.372581 57.002003 45 57.002003C 51.627419 57.002003 57 51.629417 57 45.002003C 57 38.374584 51.627419 33.001999 45 33.001999C 38.372581 33.001999 33 38.374584 33 45.002003ZM 50.348 41.512001L 44.537998 49.259998C 44.276604 49.607647 43.877338 49.824909 43.44347 49.855598C 43.009598 49.886288 42.583725 49.72739 42.275997 49.419998L 39.276001 46.419998M 29 47L 13 47C 11.895431 47 11 46.104568 11 45L 11 17C 11 15.895431 11.895431 15 13 15L 49 15C 50.104568 15 51 15.895431 51 17L 51 30M 21 11.002L 21 21.001999M 41 11.002L 41 21.001999M 11 25.001999L 51 25.001999"/>
+  </symbol>
+</svg>
+
+<!-- Geometric background shapes -->
+<div class="bg-shapes" aria-hidden="true">
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
+  <div class="bg-shape bg-shape-4"></div>
+</div>
+
+<!-- Progress bar -->
+<div class="progress-bar" aria-hidden="true"></div>
+
+<!-- Nav -->
+<div id="nav-root"></div>
+
+<main>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <h1 class="hero-title">
+          Transforme<br>
+          <span class="hero-title-gradient"><span class="hero-typewriter" data-words="seu conhecimento,seu livro,sua formação,sua mentoria">seu conhecimento</span><span class="hero-typewriter-cursor" aria-hidden="true">|</span></span><br>
+          em resultados reais.
+        </h1>
+
+        <p class="hero-subtitle">
+          Remova o que impede você de começar e ser constante no Instagram sem precisar de Canva ou templates genéricos que não te representam.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="./comecar.html?plano=completo" class="btn-primary">
+            Garantir acesso antecipado
+            <svg width="14" height="14"><use href="#icon-arrow-right"/></svg>
+          </a>
+          <a href="./mentoria.html" class="btn-secondary">Conhecer a mentoria 1:1</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MANIFESTO ─────────────────────────────────────────── -->
+  <section class="manifesto">
+    <div class="container">
+      <div class="manifesto-inner">
+        <p class="manifesto-quote">
+          "Por anos vi o mesmo padrão se repetir: o especialista mais qualificado da sala perdendo espaço para quem tinha presença digital mais clara. O problema nunca foi o conhecimento. Foi a ausência de processo."
+        </p>
+        <p class="manifesto-author">— Luan Bonadie</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── PROBLEMA ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Diagnóstico</p>
+        <h2 class="section-title">Você já se sentiu assim?</h2>
+      </div>
+
+      <div class="thought-grid">
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Eu posto, mas nada parece encaixar na minha oferta.</p>
+        </div>
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Tenho site, mas ele não explica meu valor em poucos segundos.</p>
+        </div>
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Toda vez que preciso de um post novo, começo do zero — sem padrão, sem processo.</p>
+        </div>
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Minha comunicação até parece bonita, só não traz o tipo certo de cliente.</p>
+        </div>
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Não quero depender de agência ou social media para sempre.</p>
+        </div>
+
+        <div class="thought-card reveal-on-scroll">
+          <span class="thought-quote" aria-hidden="true">"</span>
+          <p>Quero um processo que eu consiga repetir sem me perder na técnica.</p>
+        </div>
+
+      </div>
+
+      <div class="problem-closing reveal-on-scroll">
+        <h2 class="section-title">Se sim,<br>o Omentor.Studio foi desenhado para você.</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+    </div>
+  </section>
+
+  <!-- ── O QUE VOCÊ RECEBE ──────────────────────────────────── -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">O que você recebe</p>
+        <h2 class="section-title">Tudo com a sua cara.<br><span class="section-title-gradient">Não um template qualquer.</span></h2>
+      </div>
+
+      <div class="deliverables-grid">
+
+        <div class="feature-card reveal-on-scroll">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="20" height="20"><use href="#icon-pillar-strategy"/></svg>
+          </div>
+          <h3 class="feature-title">Estratégia documentada</h3>
+          <p class="feature-desc">Posicionamento, público, mensagem e direção de conteúdo para você parar de comunicar no escuro.</p>
+        </div>
+
+        <div class="feature-card accent reveal-on-scroll">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="20" height="20"><use href="#icon-pillar-identity"/></svg>
+          </div>
+          <h3 class="feature-title">Identidade visual</h3>
+          <p class="feature-desc">A base visual que dá coerência para sua marca, para o site e para os conteúdos que você publica.</p>
+        </div>
+
+        <div class="feature-card reveal-on-scroll">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="20" height="20"><use href="#icon-pillar-site"/></svg>
+          </div>
+          <h3 class="feature-title">Site alinhado ao seu objetivo</h3>
+          <p class="feature-desc">Uma presença digital que organiza sua oferta, sustenta sua autoridade e faz seu valor ficar claro logo de cara.</p>
+        </div>
+
+        <div class="feature-card accent reveal-on-scroll">
+          <div class="feature-icon">
+            <svg viewBox="0 0 64 64" width="20" height="20"><use href="#icon-pillar-posts"/></svg>
+          </div>
+          <h3 class="feature-title">Posts prontos para publicar</h3>
+          <p class="feature-desc">Peças pensadas para manter sua comunicação ativa com consistência, sem depender de improviso toda semana.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMO FUNCIONA ──────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Como funciona</p>
+        <h2 class="section-title">Não é uma solução genérica.<br><span class="section-title-gradient">É um processo validado.</span></h2>
+        <p class="section-subtitle">O processo tem 5 etapas. Você responde. O agente entrega.</p>
+      </div>
+
+      <div class="steps-list">
+
+        <div class="step-item reveal-on-scroll">
+          <div class="step-num">01</div>
+          <div>
+            <h3 class="step-content-title">Diagnóstico</h3>
+            <p class="step-content-desc">Você conta sobre seu negócio, público e objetivos. O agente estrutura seu perfil estratégico — sem perguntas genéricas.</p>
+          </div>
+        </div>
+
+        <div class="step-item reveal-on-scroll">
+          <div class="step-num">02</div>
+          <div>
+            <h3 class="step-content-title">Estratégia</h3>
+            <p class="step-content-desc">Posicionamento, mensagem central e plano de conteúdo definidos com base no que você tem, não numa fórmula padrão.</p>
+          </div>
+        </div>
+
+        <div class="step-item reveal-on-scroll">
+          <div class="step-num">03</div>
+          <div>
+            <h3 class="step-content-title">Identidade visual</h3>
+            <p class="step-content-desc">O agente propõe uma direção estética derivada do seu perfil. Você aprova antes de qualquer geração.</p>
+          </div>
+        </div>
+
+        <div class="step-item reveal-on-scroll">
+          <div class="step-num">04</div>
+          <div>
+            <h3 class="step-content-title">Criação</h3>
+            <p class="step-content-desc">Site e posts são criados com base em tudo que foi construído nas etapas anteriores. Nada é genérico.</p>
+          </div>
+        </div>
+
+        <div class="step-item reveal-on-scroll">
+          <div class="step-num">05</div>
+          <div>
+            <h3 class="step-content-title">Entrega</h3>
+            <p class="step-content-desc">Arquivos do site, templates de posts no app, estratégia documentada. Prontos para usar.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CAMINHOS ───────────────────────────────────────────── -->
+  <section class="section section-alt" id="caminhos">
+    <div class="container">
+      <div class="section-header text-center">
+        <p class="section-label">Escolha seu caminho</p>
+        <h2 class="section-title">Dois caminhos. Mesmo processo.<br>Você escolhe o ritmo.</h2>
+      </div>
+
+      <div class="plans-grid">
+
+        <div class="plan-card reveal-on-scroll">
+          <div class="plan-name">Omentor.Studio</div>
+          <p class="plan-desc">Para quem quer construir autonomia e estar entre os primeiros a acessar quando o produto abrir.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Acesso antecipado pela lista de espera
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Fluxo de processo guiado
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Estratégia, site e posts no mesmo sistema
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Caminho pensado para autonomia
+            </li>
+          </ul>
+          <a href="./comecar.html?plano=completo" class="btn-secondary mt-auto">Garantir acesso antecipado</a>
+        </div>
+
+        <div class="plan-card featured reveal-on-scroll">
+          <div class="plan-badge">Acompanhamento direto</div>
+          <div class="plan-name">Mentoria 1:1</div>
+          <p class="plan-desc">Para quem quer o Luan conduzindo as decisões, o raciocínio e a construção da presença digital ao vivo.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              3 encontros online
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Estratégia, site e posts prontos
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Condução direta de Luan Bonadie
+            </li>
+            <li class="plan-feature">
+              <svg width="16" height="16"><use href="#icon-check"/></svg>
+              Ideal para quem quer segurança antes da autonomia
+            </li>
+          </ul>
+          <a href="./mentoria.html" class="btn-primary mt-auto">
+            Conhecer a mentoria
+            <svg width="14" height="14"><use href="#icon-arrow-right"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--ds-color-text-3)">
+        Se o seu objetivo é autonomia, a lista de espera é o caminho. Se quer alguém conduzindo cada decisão, a mentoria é o atalho.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CASE LÍGIA ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Resultado real</p>
+        <h2 class="section-title">Conhecimento não se vende sozinho, mas<br><span class="section-title-gradient">com estratégia vende.</span></h2>
+      </div>
+
+      <div class="case-card reveal-on-scroll">
+        <div>
+          <p class="case-label">Primeiro case documentado</p>
+          <h3 class="case-name">Lígia Flauzino</h3>
+          <p class="case-desc">Escritora espiritual e analista comportamental. Ponto de partida: sem presença digital estruturada.</p>
+
+          <ul class="case-deliverables">
+            <li class="case-deliverable">
+              <svg width="14" height="14"><use href="#icon-check"/></svg>
+              Estratégia completa de posicionamento e canais
+            </li>
+            <li class="case-deliverable">
+              <svg width="14" height="14"><use href="#icon-check"/></svg>
+              Site com identidade visual criada do zero
+            </li>
+            <li class="case-deliverable">
+              <svg width="14" height="14"><use href="#icon-check"/></svg>
+              Templates de posts para Instagram
+            </li>
+          </ul>
+
+          <p style="font-size:13px;color:var(--ds-color-text-3);font-style:italic;margin-top:8px">
+            Saiu com site no ar, posts prontos e estratégia documentada. Tudo gerado com o mesmo processo que hoje sustenta a mentoria e o produto.
+          </p>
+
+          <a href="https://ligiaflauzino.com.br/" target="_blank" rel="noopener noreferrer" class="btn-ghost btn-sm" style="margin-top:24px;display:inline-flex" aria-label="Ver o site da Lígia Flauzino">
+            Ver o site da Lígia
+            <svg width="13" height="13"><use href="#icon-external-link"/></svg>
+          </a>
+        </div>
+
+        <div class="case-visuals">
+          <img
+            src="./assets/print-site-ligia-flauzino.png"
+            alt="Site da Lígia Flauzino — criado com o workflow do Omentor.Studio"
+            class="case-visual-img"
+            loading="lazy"
+          >
+          <img
+            src="./assets/posts-ligia-iphone.png"
+            alt="Posts de Instagram da Lígia Flauzino — templates criados com o Omentor.Studio"
+            class="case-visual-img"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOBRE LUAN ─────────────────────────────────────────── -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="about-grid">
+
+        <div>
+          <p class="section-label">Quem está por trás do processo</p>
+          <h2 class="section-title" style="margin-bottom:var(--ds-space-6)">Luan L. Bonadie</h2>
+
+          <div class="about-body">
+            <p>Passei os últimos 10 anos resolvendo o mesmo problema: especialistas com muito conhecimento e uma presença digital que não representava isso.</p>
+            <p>Pelo Grupo Ide Comunicação, atendi 140+ profissionais em 12 países — a maioria chegava com os mesmos dois problemas: posts que não geravam clientes e um site que não vendia. Esse trabalho me forçou a criar um processo que funciona para qualquer nicho, não uma fórmula que aplico em todo mundo.</p>
+            <p>Fui convidado pelo O Novo Mercado — a maior escola de marketing do Brasil — para atuar como Engenheiro de Prompt, treinando as IAs da plataforma com conteúdo exclusivo para copywriters e empreendedores. Lá entendi que o processo que minha equipe levava semanas para entregar podia ser sistematizado.</p>
+            <p>Fui também contratado como professor de chatbots pela Sem Codar — a maior escola de programação no-code do mundo — onde fui aluno por 5 anos. O fundador Renato Asse me convidou ao hall de professores pela expertise em uma área que cresce rápido no Brasil.</p>
+            <p>O Omentor.Studio é o resultado. O mesmo processo — agora sistematizado.</p>
+          </div>
+
+          <div class="about-creds">
+            <div class="about-cred">
+              <span class="about-cred-dot"></span>
+              Grupo Ide Comunicação — 10 anos · 140+ clientes · 12 países
+            </div>
+            <div class="about-cred">
+              <span class="about-cred-dot"></span>
+              O Novo Mercado — Engenheiro de Prompt e Gestor de Automação
+            </div>
+            <div class="about-cred">
+              <span class="about-cred-dot"></span>
+              Sem Codar — Professor de Chatbot
+            </div>
+          </div>
+
+          <!-- Badge idêntica ao comecar.html -->
+          <div class="about-author-badge" role="group" aria-label="Sobre o autor">
+            <img
+              class="about-author-avatar"
+              src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+              alt="Foto de Luan L. Bonadie"
+              width="60" height="60"
+              loading="lazy"
+            >
+            <div class="about-author-info">
+              <span class="about-author-idealized">Idealizado por</span>
+              <span class="about-author-name">Luan L. Bonadie</span>
+              <span class="about-author-role">Estrategista Digital</span>
+            </div>
+          </div>
+        </div><!-- /about-grid col 1 -->
+
+        <div class="about-highlights">
+          <div class="about-highlight-card reveal-on-scroll">
+            <div class="stat-number" style="font-size:var(--ds-text-4xl);margin-bottom:var(--ds-space-2)">10 anos</div>
+            <div style="font-size:var(--ds-text-sm);color:var(--ds-color-text-3)">construindo o mesmo processo — agora sistematizado</div>
+          </div>
+          <div class="about-highlight-card reveal-on-scroll">
+            <div class="stat-number" style="font-size:var(--ds-text-4xl);margin-bottom:var(--ds-space-2)">140+</div>
+            <div style="font-size:var(--ds-text-sm);color:var(--ds-color-text-3)">profissionais em 12 países atendidos pela metodologia</div>
+          </div>
+          <div class="about-highlight-card reveal-on-scroll">
+            <div style="font-family:var(--ds-font-display);font-size:var(--ds-text-xl);font-weight:700;color:var(--ds-color-text-1);margin-bottom:var(--ds-space-2)">Ex. Eng. de Prompt n'O Novo Mercado</div>
+            <div style="font-size:var(--ds-text-sm);color:var(--ds-color-text-3)">Maior escola de marketing e negócios da América Latina.</div>
+          </div>
+          <div class="about-highlight-card reveal-on-scroll">
+            <div style="font-family:var(--ds-font-display);font-size:var(--ds-text-xl);font-weight:700;color:var(--ds-color-text-1);margin-bottom:var(--ds-space-2)">Ex. Prof. na Sem Codar</div>
+            <div style="font-size:var(--ds-text-sm);color:var(--ds-color-text-3)">Maior comunidade de desenvolimento no-code do BRasil.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PARA QUEM É ────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Para quem é</p>
+        <h2 class="section-title">Você se reconhece aqui?</h2>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card reveal-on-scroll">
+          <h3 class="audience-card-title">A nutricionista que posta, mas não sabe o que dizer</h3>
+          <p class="audience-card-desc">Você tem metodologia própria, resultados reais com pacientes, e quando senta para criar conteúdo trava. O problema não é criatividade. É que ninguém organizou o que você tem em mensagem.</p>
+        </div>
+        <div class="audience-card reveal-on-scroll">
+          <h3 class="audience-card-title">O psicólogo com site que não representa o que faz</h3>
+          <p class="audience-card-desc">Tem página no ar, mas ela não explica seu diferencial, não fala com o cliente certo e não gera contato. Um site genérico é quase pior que não ter um.</p>
+        </div>
+        <div class="audience-card reveal-on-scroll">
+          <h3 class="audience-card-title">O coach que depende de agência para tudo</h3>
+          <p class="audience-card-desc">Cada post, cada atualização, cada mudança de oferta — você precisa chamar alguém. Você quer autonomia, não uma terceirização permanente de algo que é seu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────────────── -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header section-header-center">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title">Perguntas frequentes</h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            O SaaS já está aberto?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">Ainda não. O produto está em pré-lançamento e a lista de espera é a forma de garantir prioridade quando abrir.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Preciso saber tecnologia para usar?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">Não. O fluxo foi desenhado para ser guiado. Você responde as perguntas certas e o sistema conduz o resto sem exigir conhecimento técnico.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Qual a diferença entre o SaaS e a mentoria?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">No SaaS, você conduz o processo com ajuda do sistema. Na mentoria, Luan conduz as decisões com você em 3 encontros online.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Posso começar pela mentoria e depois ir para o SaaS?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">Sim. Esse é o caminho mais simples para quem quer segurança primeiro e autonomia depois.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            O que acontece quando eu entro na lista de espera?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">Você deixa seu contato, indica seu perfil e entra na fila de acesso antecipado. Quando a liberação acontecer, você recebe a próxima etapa primeiro.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Quanto custa o produto?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">O produto ainda não tem preço público — estamos em pré-lançamento. Quem entra na lista de acesso antecipado recebe a oferta de lançamento antes de qualquer outra pessoa. A mentoria 1:1 tem valor de R$3.700 e inclui 3 encontros online com Luan Bonadie.</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            E se eu quiser suporte direto com o Luan?
+            <svg class="faq-icon" viewBox="0 0 24 24"><use href="#icon-plus"/></svg>
+          </button>
+          <div class="faq-answer">Para quem quer a presença do Luan em cada etapa — diagnóstico, posicionamento e entregáveis com acompanhamento — existe a Mentoria 1:1. <a href="./mentoria.html" style="color:var(--ds-color-text-1);text-decoration:underline;text-underline-offset:3px">Conheça a mentoria</a></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner is-inline reveal-on-scroll">
+        <h2 class="cta-title">Você não precisa improvisar sua presença digital. Precisa de um processo que já funciona.</h2>
+        <p class="cta-body">O processo existe. A metodologia é validada. O próximo passo é seu.</p>
+        <div class="cta-buttons">
+          <a href="./comecar.html?plano=completo" class="btn-primary">
+            Reservar minha vaga na lista
+            <svg width="14" height="14"><use href="#icon-arrow-right"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer-root"></div>
+
+<script src="./components.js"></script>
+<script type="module">
+  import {
+    initHeroTimeline,
+    initScrollReveals,
+    initManifestoReveal,
+    initStatsCounter,
+    initWhatsAppFloat,
+    initButtonHover,
+    initTypewriter
+  } from './animations.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initHeroTimeline();
+    initScrollReveals();
+    initManifestoReveal();
+    initStatsCounter();
+    initWhatsAppFloat();
+    initButtonHover('.btn-primary');
+    initTypewriter('.hero-typewriter');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-root=".">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar Call — Mentoria 1:1 | Omentor.Studio</title>
+  <meta name="description" content="Preencha o formulário para agendar uma call de 30 minutos com Luan Bonadie e entender como a mentoria pode funcionar para o seu negócio.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    /* ─── Page-specific overrides (form pages share a common skin) ─── */
+    .form-page-container {
+      max-width: var(--ds-form-max);
+      margin: 0 auto;
+      padding: 0 var(--ds-container-pad-sm);
+      padding-bottom: 10rem;
+      position: relative;
+      z-index: var(--ds-z-content);
+    }
+
+    .form-top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--ds-space-6) 0 var(--ds-space-7);
+    }
+
+    .form-logo {
+      font-family: var(--ds-font-display);
+      font-weight: 800;
+      font-size: var(--ds-text-md);
+      letter-spacing: -0.04em;
+      background: var(--ds-color-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .form-back {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--ds-transition-fast);
+    }
+
+    .form-back:hover { color: var(--ds-color-text-2); }
+
+    .schedule-intro {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-5);
+      margin-bottom: var(--ds-space-8);
+    }
+
+    .schedule-badge {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-6);
+      border-radius: var(--ds-radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--ds-color-border);
+      box-shadow: var(--ds-shadow-2);
+    }
+
+    .schedule-badge-mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ds-color-text-1);
+      background: var(--ds-color-accent-gradient);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.04);
+    }
+
+    .schedule-badge-mark svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .schedule-badge-copy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+      min-width: 0;
+    }
+
+    .schedule-badge-kicker {
+      font-size: var(--ds-text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ds-color-text-3);
+    }
+
+    .schedule-badge-title {
+      font-family: var(--ds-font-display);
+      font-size: clamp(var(--ds-text-xl), 3vw, var(--ds-text-3xl));
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--ds-color-text-1);
+    }
+
+    .schedule-badge-text {
+      font-size: var(--ds-text-base);
+      line-height: 1.65;
+      color: var(--ds-color-text-2);
+      max-width: 54ch;
+    }
+
+    .schedule-author-badge {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-5);
+      margin-top: 0;
+      padding-top: var(--ds-space-5);
+      border-top: 1px solid var(--ds-color-border);
+    }
+
+    .schedule-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+      padding-top: var(--ds-space-2);
+    }
+
+    .schedule-start-btn {
+      width: fit-content;
+    }
+
+    .schedule-cta-note {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      line-height: 1.55;
+      max-width: 42ch;
+    }
+
+    .author-avatar {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--ds-color-border-med);
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .author-idealized {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .author-name {
+      font-size: var(--ds-text-base);
+      font-weight: 700;
+      color: var(--ds-color-text-1);
+    }
+
+    .author-role {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+    }
+
+    .author-creds {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 0.25rem;
+    }
+
+    .author-cred {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.45;
+    }
+
+    .author-cred::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--ds-color-accent-gradient-diag);
+      flex-shrink: 0;
+    }
+
+    /* Progress */
+    .fp-progress-wrap { margin-bottom: var(--ds-space-8); }
+
+    .fp-track {
+      height: 2px;
+      background: var(--ds-color-border);
+      border-radius: var(--ds-radius-full);
+      overflow: hidden;
+    }
+
+    .fp-fill {
+      height: 100%;
+      background: var(--ds-color-accent-gradient);
+      border-radius: var(--ds-radius-full);
+      transition: width 0.45s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 10px var(--ds-color-accent-glow-sm);
+      width: 0%;
+    }
+
+    .fp-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--ds-space-2);
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-3);
+    }
+
+    /* Step */
+    .fp-step { animation: fpSlide 0.4s cubic-bezier(0.4,0,0.2,1) both; }
+
+    @keyframes fpSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fp-step-label {
+      font-size: var(--ds-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+      margin-bottom: var(--ds-space-3);
+    }
+
+    .fp-question {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.5rem, 4vw, var(--ds-text-2xl));
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      color: var(--ds-color-text-1);
+      margin-bottom: var(--ds-space-5);
+    }
+
+    .fp-hint {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      font-style: italic;
+      margin-top: var(--ds-space-2);
+    }
+
+    .fp-error-text {
+      margin-top: var(--ds-space-2);
+      font-size: var(--ds-text-xs);
+      color: #fca5a5;
+      letter-spacing: 0.01em;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea.fp-textarea {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-1);
+      outline: none;
+      transition: var(--ds-transition-base);
+    }
+
+    input::placeholder, textarea.fp-textarea::placeholder {
+      color: var(--ds-color-text-3);
+    }
+
+    input:focus, textarea.fp-textarea:focus {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-focus);
+      box-shadow: 0 0 0 4px var(--ds-color-focus-ring);
+    }
+
+    textarea.fp-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.65;
+    }
+
+    /* Options */
+    .fp-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+    }
+
+    .fp-option {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-4);
+      padding: 1.25rem 1.5rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      cursor: pointer;
+      transition: var(--ds-transition-base);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fp-option::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ds-color-accent-gradient-diag);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .fp-option:hover {
+      border-color: rgba(236,72,153,0.35);
+      background: var(--ds-color-surface-2);
+      transform: translateX(4px);
+    }
+
+    .fp-option:hover::before { opacity: 0.06; }
+
+    .fp-option.selected {
+      border-color: var(--ds-color-accent-end);
+      background: linear-gradient(135deg, var(--ds-color-accent-soft-2), rgba(236,72,153,0.10));
+      box-shadow: 0 0 20px rgba(236,72,153,0.18);
+    }
+
+    .fp-option.selected::before { opacity: 0.08; }
+
+    .fp-opt-key {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: var(--ds-radius-sm);
+      background: var(--ds-color-surface-3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--ds-text-xs);
+      font-weight: 700;
+      color: var(--ds-color-text-3);
+      position: relative;
+      z-index: 1;
+      transition: var(--ds-transition-fast);
+    }
+
+    .fp-option.selected .fp-opt-key {
+      background: var(--ds-color-accent-gradient-diag);
+      color: var(--ds-color-text-1);
+    }
+
+    .fp-opt-body {
+      position: relative;
+      z-index: 1;
+      font-size: var(--ds-text-base);
+      color: var(--ds-color-text-2);
+      line-height: 1.45;
+    }
+
+    .fp-option.selected .fp-opt-body { color: var(--ds-color-text-1); }
+
+    /* Nav (sticky) */
+    .fp-nav-backdrop {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: calc(9rem + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(to top, rgba(3,3,3,0.95) 40%, transparent);
+      pointer-events: none;
+      z-index: calc(var(--ds-z-nav) - 2);
+    }
+
+    .fp-nav-row {
+      position: fixed;
+      bottom: calc(var(--ds-space-6) + env(safe-area-inset-bottom, 0px));
+      left: 50%; transform: translateX(-50%);
+      display: flex;
+      gap: var(--ds-space-3);
+      width: calc(100% - 3rem);
+      max-width: var(--ds-form-max);
+      z-index: var(--ds-z-nav);
+    }
+
+    .fp-btn-back {
+      padding: 1rem 1.5rem;
+      min-width: 80px;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-2);
+      cursor: pointer;
+      transition: var(--ds-transition-fast);
+    }
+
+    .fp-btn-back:hover {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-border-med);
+    }
+
+    .fp-btn-next {
+      flex: 1;
+      padding: 1rem 2rem;
+      background: var(--ds-color-accent-gradient-diag);
+      border: none;
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 600;
+      color: var(--ds-color-text-1);
+      cursor: pointer;
+      transition: var(--ds-transition-base);
+      box-shadow: var(--ds-shadow-btn-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fp-btn-next::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      opacity: 0;
+      transition: var(--ds-transition-fast);
+    }
+
+    .fp-btn-next:hover { transform: translateY(-2px); box-shadow: var(--ds-shadow-btn-primary-hover); }
+    .fp-btn-next:hover::before { opacity: 1; }
+
+    /* Loading */
+    .fp-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-9) 0;
+      animation: fpSlide 0.4s both;
+    }
+
+    .fp-spinner {
+      width: 44px; height: 44px;
+      border: 2.5px solid var(--ds-color-border);
+      border-top-color: var(--ds-color-accent-end);
+      border-radius: 50%;
+      animation: fpspin 0.75s linear infinite;
+    }
+
+    @keyframes fpspin { to { transform: rotate(360deg); } }
+
+    /* Success */
+    .fp-success { animation: fpSlide 0.5s cubic-bezier(0.4,0,0.2,1) both; }
+
+    .fp-success-icon {
+      width: 60px; height: 60px;
+      background: var(--ds-color-accent-gradient-diag);
+      border-radius: var(--ds-radius-xl);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin-bottom: var(--ds-space-6);
+      box-shadow: var(--ds-shadow-4);
+    }
+
+    .fp-success-headline {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.75rem, 4vw, var(--ds-text-3xl));
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      background: var(--ds-color-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--ds-space-4);
+    }
+
+    .fp-success-body {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-2);
+      line-height: 1.75;
+      max-width: 460px;
+      margin-bottom: var(--ds-space-6);
+    }
+
+    .fp-summary-card {
+      background: var(--ds-color-surface);
+      border: 1px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-xl);
+      padding: var(--ds-space-5) var(--ds-space-6);
+      margin-bottom: var(--ds-space-6);
+    }
+
+    .fp-sum-label {
+      font-size: var(--ds-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+      margin-bottom: var(--ds-space-2);
+    }
+
+    .fp-sum-value {
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-1);
+    }
+
+    .fp-sep { width: 100%; height: 1px; background: var(--ds-color-border); margin: var(--ds-space-4) 0; }
+
+    .fp-cta-wrap {
+      display: flex; flex-direction: column;
+      gap: var(--ds-space-3); margin-bottom: var(--ds-space-7);
+    }
+
+    .fp-cta-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-2);
+      padding: 1.1rem 2rem;
+      background: var(--ds-color-accent-gradient-diag);
+      border: none; border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body); font-size: var(--ds-text-base); font-weight: 600;
+      color: var(--ds-color-text-1); text-decoration: none; cursor: pointer;
+      transition: var(--ds-transition-base);
+      box-shadow: var(--ds-shadow-btn-primary);
+    }
+
+    .fp-cta-primary:hover { transform: translateY(-2px); box-shadow: var(--ds-shadow-btn-primary-hover); }
+
+    .fp-cta-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-2);
+      padding: 1rem 2rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body); font-size: var(--ds-text-base); font-weight: 500;
+      color: var(--ds-color-text-2); text-decoration: none;
+      transition: var(--ds-transition-fast);
+    }
+
+    .fp-cta-secondary:hover {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-border-med);
+      color: var(--ds-color-text-1);
+    }
+
+    /* Author strip */
+    .fp-author {
+      display: flex; align-items: flex-start; gap: var(--ds-space-4);
+      padding-top: var(--ds-space-6);
+      border-top: 1px solid var(--ds-color-border);
+    }
+
+    .fp-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+      border: 1px solid var(--ds-color-border-med);
+    }
+
+    .fp-author-text { display: flex; flex-direction: column; gap: 3px; }
+
+    .fp-author-eyebrow {
+      font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+    }
+
+    .fp-author-name { font-weight: 600; font-size: var(--ds-text-base); color: var(--ds-color-text-1); }
+    .fp-author-role { font-size: var(--ds-text-sm); color: var(--ds-color-text-3); }
+
+    @media (max-width: 480px) {
+      .form-page-container { padding: 0 var(--ds-space-5); padding-bottom: 10rem; }
+      .schedule-badge {
+        padding: var(--ds-space-5);
+      }
+
+      .schedule-badge-mark {
+        width: 48px;
+        height: 48px;
+      }
+
+      .schedule-author-badge {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--ds-space-3);
+        text-align: center;
+      }
+
+      .schedule-author-badge .author-info {
+        align-items: center;
+      }
+
+      .schedule-author-badge .author-creds {
+        align-items: center;
+      }
+
+      .schedule-author-badge .author-cred {
+        justify-content: center;
+      }
+
+      .author-avatar {
+        width: 72px;
+        height: 72px;
+      }
+
+      .schedule-start-btn {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .form-page-container { padding: 0 var(--ds-container-pad); padding-bottom: 10rem; }
+    }
+
+    @media (max-width: 359px) {
+      .schedule-badge {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-height: 500px) {
+      .form-page-container { padding-bottom: 12rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background shapes (reusable pattern) -->
+<div class="bg-shapes" aria-hidden="true">
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
+  <div class="bg-shape bg-shape-4"></div>
+</div>
+
+<main class="form-page-container" role="main">
+
+  <nav class="form-top-nav" aria-label="Navegação da página de agendamento">
+    <span class="form-logo" aria-label="Agendamento">Agendamento</span>
+    <a href="./mentoria.html" class="form-back" id="form-back-link" aria-label="Voltar para a página da Mentoria">← Mentoria</a>
+  </nav>
+
+  <section class="schedule-intro" id="schedule-intro" aria-labelledby="schedule-title">
+    <div class="author-badge schedule-author-badge" aria-label="Criado por">
+      <img
+        class="author-avatar"
+        src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+        alt="Foto de Luan L. Bonadie"
+        width="68"
+        height="68"
+        loading="lazy"
+      >
+      <div class="author-info">
+        <span class="author-idealized">Agendamento com</span>
+        <span class="author-name">Luan L. Bonadie</span>
+        <span class="author-role">Empresário e Estrategista Digital</span>
+        <div class="author-creds">
+          <span class="author-cred">Grupo Ide Comunicação — 10 anos · 140+ clientes · 12 países</span>
+          <span class="author-cred">O Novo Mercado — Engenheiro de Prompt</span>
+        </div>
+      </div>
+    </div>
+    <div class="schedule-badge">
+      <div class="schedule-badge-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <rect x="3" y="4" width="18" height="17" rx="2.5" ry="2.5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <line x1="3" y1="9" x2="21" y2="9" fill="none" stroke="currentColor" stroke-width="2"/>
+          <line x1="8" y1="2.5" x2="8" y2="6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="16" y1="2.5" x2="16" y2="6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="schedule-badge-copy">
+        <p class="schedule-badge-kicker">Call de 30 minutos</p>
+        <h1 class="schedule-badge-title" id="schedule-title">Agende uma conversa comigo</h1>
+        <p class="schedule-badge-text">Eu vou entender seu contexto e dizer com clareza se a mentoria faz sentido para você.</p>
+      </div>
+    </div>
+    <div class="schedule-cta-wrap">
+      <button type="button" class="fp-cta-primary schedule-start-btn" id="schedule-start-btn" aria-label="Começar o agendamento">
+        Começar
+        <svg width="14" height="14"><use href="#icon-arrow-right"/></svg>
+      </button>
+      <p class="schedule-cta-note">Leva menos de 2 minutos.</p>
+    </div>
+  </section>
+
+  <div id="form-section" style="display:none;" aria-label="Formulário de agendamento">
+    <!-- Progress -->
+    <div class="fp-progress-wrap" id="fp-progress-wrap" aria-live="polite" aria-label="Progresso do formulário">
+      <div class="fp-track">
+        <div class="fp-fill" id="fp-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="fp-label">
+        <span id="fp-step-label"></span>
+        <span id="fp-pct-label"></span>
+      </div>
+    </div>
+
+    <!-- Step container -->
+    <div id="fp-step"></div>
+  </div>
+
+</main>
+
+<!-- Sticky nav -->
+<div class="fp-nav-backdrop" id="fp-nav-backdrop" style="display:none;" aria-hidden="true"></div>
+<div class="fp-nav-row"     id="fp-nav-row"     style="display:none;" role="group" aria-label="Navegação do formulário"></div>
+
+<script>
+  /* ─── Steps definition ─────────────────────────────────── */
+  const steps = [
+    {
+      id: 'nome',
+      type: 'text',
+      question: 'Qual é o seu nome completo?',
+      placeholder: 'Digite seu nome...',
+      label: 'Nome'
+    },
+    {
+      id: 'email',
+      type: 'email',
+      question: 'Qual é o seu e-mail?',
+      placeholder: 'seuemail@exemplo.com',
+      label: 'E-mail'
+    },
+    {
+      id: 'whatsapp',
+      type: 'tel',
+      question: 'Seu WhatsApp com DDD?',
+      placeholder: '(11) 99999-9999',
+      hint: 'Luan vai te chamar para confirmar o horário da call.',
+      label: 'WhatsApp'
+    },
+    {
+      id: 'area',
+      type: 'select',
+      question: 'Qual é a sua área de atuação?',
+      label: 'Área',
+      options: [
+        'Psicologia / Terapia',
+        'Nutrição / Saúde',
+        'Coaching / Mentoria',
+        'Consultoria / Assessoria',
+        'Educação / Infoproduto',
+        'Marketing / Branding',
+        'Outra área'
+      ]
+    },
+    {
+      id: 'necessidade',
+      type: 'select',
+      question: 'O que você está buscando com a mentoria?',
+      label: 'Necessidade',
+      options: [
+        'Posicionamento claro e estratégia definida',
+        'Site com minha identidade visual',
+        'Conteúdo para Instagram que converta',
+        'Tudo: estratégia, site e posts em 3 encontros',
+        'Ainda não tenho certeza — quero entender antes'
+      ]
+    },
+    {
+      id: 'contexto',
+      type: 'textarea',
+      question: 'Me conta um pouco da sua situação atual. (opcional)',
+      placeholder: 'Ex: tenho seguidores mas não converto, já tentei outras ferramentas, quero reorganizar a minha presença digital...',
+      hint: 'Quanto mais contexto, melhor a call de 30 minutos.',
+      label: 'Contexto',
+      optional: true
+    }
+  ];
+
+  const WA_NUMBER = '5532991313371';
+
+  let current = 0;
+  const answers = {};
+
+  /* ─── UI helpers ─────────────────────────────────────────── */
+  function showNav() {
+    document.getElementById('fp-nav-backdrop').style.display = 'block';
+    document.getElementById('fp-nav-row').style.display     = 'flex';
+    document.getElementById('form-back-link').style.display = 'none';
+  }
+
+  function hideNav() {
+    document.getElementById('fp-nav-backdrop').style.display = 'none';
+    document.getElementById('fp-nav-row').style.display     = 'none';
+  }
+
+  function startForm() {
+    document.getElementById('schedule-intro').style.display = 'none';
+    document.getElementById('form-section').style.display = 'block';
+    showNav();
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    const total = steps.length;
+    const pct   = Math.round(((current + 1) / total) * 100);
+    document.getElementById('fp-fill').style.width = pct + '%';
+    document.getElementById('fp-fill').setAttribute('aria-valuenow', pct);
+    document.getElementById('fp-step-label').textContent = `Etapa ${current + 1} de ${total}`;
+    document.getElementById('fp-pct-label').textContent  = pct + '%';
+  }
+
+  /* ─── Render ─────────────────────────────────────────────── */
+  function render() {
+    updateProgress();
+
+    const step  = steps[current];
+    const isLast= current === steps.length - 1;
+    const value = answers[step.id] ?? '';
+
+    let inputHtml = '';
+
+    if (step.type === 'select') {
+      const optHtml = step.options.map((opt, i) => {
+        const letter = String.fromCharCode(65 + i);
+        const sel    = value === opt ? ' selected' : '';
+        return `
+          <button
+            class="fp-option${sel}"
+            onclick="selectOption('${step.id}','${opt.replace(/'/g,"\\'")}',this)"
+            aria-pressed="${sel ? 'true' : 'false'}"
+          >
+            <span class="fp-opt-key" aria-hidden="true">${letter}</span>
+            <span class="fp-opt-body">${opt}</span>
+          </button>`;
+      }).join('');
+      inputHtml = `<div class="fp-options" role="group" aria-label="${step.question}">${optHtml}</div>`;
+    } else if (step.type === 'textarea') {
+      inputHtml = `
+        <textarea
+          class="fp-textarea"
+          id="fp-input-${step.id}"
+          placeholder="${step.placeholder ?? ''}"
+          rows="5"
+          aria-label="${step.label}"
+        >${value}</textarea>`;
+    } else {
+      const emailAttrs = step.type === 'email'
+        ? `inputmode="email" autocomplete="email" pattern="^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$" title="Digite um e-mail válido"`
+        : `autocomplete="${step.id === 'nome' ? 'name' : 'tel'}"`;
+      inputHtml = `
+        <input
+          type="${step.type}"
+          id="fp-input-${step.id}"
+          placeholder="${step.placeholder ?? ''}"
+          value="${value}"
+          ${emailAttrs}
+          aria-label="${step.label}"
+        >`;
+    }
+
+    const hintHtml = step.hint ? `<p class="fp-hint" role="note">${step.hint}</p>` : '';
+    const emailErrorHtml = step.type === 'email'
+      ? `<p class="fp-error-text" id="fp-email-error" role="alert" aria-live="polite" style="display:none;">Insira um e-mail válido.</p>`
+      : '';
+
+    document.getElementById('fp-step').innerHTML = `
+      <div class="fp-step" role="region" aria-label="Etapa ${current + 1}: ${step.label}">
+        <p class="fp-step-label" aria-hidden="true">Etapa ${current + 1} de ${steps.length}${step.optional ? ' · opcional' : ''}</p>
+        <h2 class="fp-question">${step.question}</h2>
+        ${inputHtml}
+        ${emailErrorHtml}
+        ${hintHtml}
+      </div>`;
+
+    // Nav
+    const navRow = document.getElementById('fp-nav-row');
+    navRow.innerHTML = `
+      ${current > 0 ? `<button class="fp-btn-back" onclick="prev()" aria-label="Voltar">← Voltar</button>` : ''}
+      <button class="fp-btn-next" onclick="next()" aria-label="Próximo">
+        Próximo →
+      </button>`;
+
+    const inp = document.getElementById(`fp-input-${step.id}`);
+    if (inp && step.type === 'email') {
+      inp.addEventListener('input', () => {
+        inp.style.borderColor = '';
+        const err = document.getElementById('fp-email-error');
+        if (err) err.style.display = 'none';
+      }, { once: true });
+    }
+    if (inp) setTimeout(() => inp.focus(), 80);
+  }
+
+  /* ─── First render ───────────────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', () => {
+    hideNav();
+    document.getElementById('schedule-start-btn').addEventListener('click', startForm);
+  });
+
+  /* ─── Interactions ───────────────────────────────────────── */
+  function selectOption(id, val, el) {
+    answers[id] = val;
+    el.closest('.fp-options').querySelectorAll('.fp-option').forEach(b => {
+      b.classList.remove('selected');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    el.classList.add('selected');
+    el.setAttribute('aria-pressed', 'true');
+  }
+
+  function saveAnswer() {
+    const step = steps[current];
+    if (step.type !== 'select') {
+      const inp = document.getElementById(`fp-input-${step.id}`);
+      if (inp) answers[step.id] = inp.value.trim();
+    }
+  }
+
+  function validate() {
+    const step  = steps[current];
+    const value = answers[step.id] ?? '';
+    if (step.optional) return true;
+    if (!value) return false;
+    if (step.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    return true;
+  }
+
+  function next() {
+    saveAnswer();
+    if (!validate()) {
+      const inp = document.getElementById(`fp-input-${steps[current].id}`);
+      if (inp) {
+        inp.focus();
+        inp.style.borderColor = 'var(--ds-color-error)';
+      }
+      if (steps[current].type === 'email') {
+        const err = document.getElementById('fp-email-error');
+        if (err) err.style.display = 'block';
+      }
+      return;
+    }
+    if (current < steps.length - 1) { current++; render(); }
+    else submit();
+  }
+
+  function prev() {
+    saveAnswer();
+    if (current > 0) { current--; render(); }
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+  }
+
+  /* ─── Submit → WhatsApp ──────────────────────────────────── */
+  function submit() {
+    document.getElementById('fp-progress-wrap').style.display = 'none';
+    hideNav();
+
+    document.getElementById('fp-step').innerHTML = `
+      <div class="fp-loading" role="status" aria-live="polite">
+        <div class="fp-spinner" aria-hidden="true"></div>
+        <p style="font-size:var(--ds-text-base);color:var(--ds-color-text-3);">Preparando sua mensagem...</p>
+      </div>`;
+
+    const WEBHOOK = 'https://webhooks.envia.click/webhook/70d91ce3-7cba-4d6a-bd58-36069752aaf6';
+    fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...answers, source: 'agendar.html', timestamp: new Date().toISOString() })
+    }).catch(() => {});
+
+    setTimeout(() => {
+      const msg = encodeURIComponent(
+        `Olá, Luan. Me cadastrei no site do Omentor.Studio.\n\n` +
+        `Meu nome é ${answers['nome'] ?? ''}.\n` +
+        `Atuo na área de ${answers['area'] ?? ''}.\n` +
+        `Estou buscando: ${answers['necessidade'] ?? ''}.\n` +
+        (answers['contexto'] ? `\nContexto: ${answers['contexto']}` : '')
+      );
+      const waUrl = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      showSuccess(waUrl);
+    }, 1200);
+  }
+
+  function showSuccess(waUrl) {
+    const summaryItems = [
+      ['Nome', answers['nome'] ?? '—'],
+      ['E-mail', answers['email'] ?? '—'],
+      ['WhatsApp', answers['whatsapp'] ?? '—'],
+      ['Área', answers['area'] ?? '—'],
+      ['O que busca', answers['necessidade'] ?? '—'],
+      ['Contexto', answers['contexto'] ?? '—']
+    ];
+
+    const summaryHtml = summaryItems.map(([label, value], index) => `
+      <p class="fp-sum-label">${label}</p>
+      <p class="fp-sum-value">${escapeHtml(value)}</p>
+      ${index < summaryItems.length - 1 ? '<div class="fp-sep" aria-hidden="true"></div>' : ''}
+    `).join('');
+
+    document.getElementById('fp-step').innerHTML = `
+      <div class="fp-success">
+        <div class="fp-success-icon" aria-hidden="true">✓</div>
+
+        <h1 class="fp-success-headline">Tudo certo.</h1>
+
+        <p class="fp-success-body">
+          Confirme os dados e finalize o agendamento.
+        </p>
+
+        <div class="fp-summary-card" aria-label="Resumo do agendamento">
+          ${summaryHtml}
+        </div>
+
+        <div class="fp-cta-wrap">
+          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="fp-cta-primary" aria-label="Abrir WhatsApp com mensagem pré-preenchida para Luan Bonadie">
+            Abrir WhatsApp e concluir →
+          </a>
+          <a href="./mentoria.html" class="fp-cta-secondary" aria-label="Voltar para a página da Mentoria">
+            ← Voltar para a Mentoria
+          </a>
+        </div>
+
+        <div class="fp-author">
+          <img
+            class="fp-avatar"
+            src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+            alt="Foto de Luan L. Bonadie"
+            width="56" height="56"
+            loading="lazy"
+          >
+          <div class="fp-author-text">
+            <span class="fp-author-eyebrow">Mentoria conduzida por</span>
+            <span class="fp-author-name">Luan L. Bonadie</span>
+            <span class="fp-author-role">Estrategista Digital · 10 anos · 140+ clientes · 12 países</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* ─── Keyboard ───────────────────────────────────────────── */
+  document.addEventListener('keydown', e => {
+    if (document.querySelector('.fp-loading') || document.querySelector('.fp-success')) return;
+    if (e.key === 'Enter' && e.shiftKey) { e.preventDefault(); prev(); return; }
+    if (e.key === 'Enter' && !e.target.matches('textarea')) { e.preventDefault(); next(); }
+  });
+</script>
+
+</body>
+</html>

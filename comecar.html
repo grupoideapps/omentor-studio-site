@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-root=".">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Começar — Omentor.Studio</title>
+  <meta name="description" content="Preencha seus dados e entre na lista de espera do Omentor.Studio. Os primeiros a entrar têm acesso antecipado e preço de fundador.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+  <!-- Design System + site styles -->
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--ds-font-body);
+      background: var(--ds-color-bg);
+      color: var(--ds-color-text-1);
+      min-height: 100vh;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    /* ─── Background shapes ───────────────────────────────────── */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: var(--ds-z-bg);
+      pointer-events: none;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      animation: float 14s ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 700px; height: 160px;
+      left: -8%; top: 18%;
+      background: linear-gradient(to right, var(--ds-color-shape-indigo), transparent);
+      --rotation: 10deg;
+      animation-delay: 0s;
+    }
+    .shape-2 {
+      width: 550px; height: 130px;
+      right: -4%; top: 68%;
+      background: linear-gradient(to right, var(--ds-color-shape-rose), transparent);
+      --rotation: -14deg;
+      animation-delay: 2.5s;
+    }
+    .shape-3 {
+      width: 320px; height: 85px;
+      left: 8%; bottom: 12%;
+      background: linear-gradient(to right, var(--ds-color-shape-purple), transparent);
+      --rotation: -8deg;
+      animation-delay: 5s;
+    }
+    .shape-4 {
+      width: 200px; height: 55px;
+      right: 22%; top: 12%;
+      background: linear-gradient(to right, var(--ds-color-shape-amber), transparent);
+      --rotation: 22deg;
+      animation-delay: 7s;
+    }
+    .shape-5 {
+      width: 160px; height: 45px;
+      left: 28%; top: 8%;
+      background: linear-gradient(to right, var(--ds-color-shape-cyan), transparent);
+      --rotation: -26deg;
+      animation-delay: 9s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(var(--rotation)); }
+      50%       { transform: translateY(18px) rotate(var(--rotation)); }
+    }
+
+    /* ─── Gradient overlays ───────────────────────────────────── */
+    .gradient-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: calc(var(--ds-z-bg) + 1);
+    }
+
+    .gradient-top    { background: linear-gradient(to bottom, rgba(99,102,241,0.04), transparent 50%); }
+    .gradient-bottom { background: linear-gradient(to top, rgba(236,72,153,0.04), transparent 50%); }
+    .vignette        { background: radial-gradient(circle at center, transparent 0%, rgba(3,3,3,0.75) 100%); }
+
+    /* ─── Container ───────────────────────────────────────────── */
+    .container {
+      position: relative;
+      z-index: var(--ds-z-content);
+      max-width: var(--ds-form-max);
+      margin: 0 auto;
+      padding: var(--ds-space-6) var(--ds-container-pad-sm);
+      padding-bottom: 10rem;
+    }
+
+    /* ─── Nav strip ───────────────────────────────────────────── */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--ds-space-5) 0;
+      margin-bottom: var(--ds-space-7);
+    }
+
+    .logo-mark {
+      font-family: var(--ds-font-display);
+      font-weight: 800;
+      font-size: var(--ds-text-md);
+      letter-spacing: -0.04em;
+      background: var(--ds-color-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .back-link {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--ds-transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--ds-color-text-2);
+    }
+
+    /* ─── Progress ────────────────────────────────────────────── */
+    .progress-wrap {
+      margin-bottom: var(--ds-space-7);
+    }
+
+    .progress-track {
+      height: 2px;
+      background: var(--ds-color-border);
+      border-radius: var(--ds-radius-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--ds-color-accent-gradient);
+      border-radius: var(--ds-radius-full);
+      transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px var(--ds-color-accent-glow-sm);
+      width: 0%;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--ds-space-2);
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-3);
+    }
+
+    /* ─── Hero (landing view) ─────────────────────────────────── */
+    #hero {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      animation: fadeSlideUp 0.6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    /* ─── Waitlist incentives ─────────────────────────────────── */
+    .incentives {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+      margin-bottom: var(--ds-space-7);
+    }
+
+    .incentive-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-3);
+      font-size: var(--ds-text-base);
+      color: var(--ds-color-text-2);
+    }
+
+    .incentive-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      margin-top: 2px;
+      background: var(--ds-color-accent-gradient-diag);
+      border-radius: var(--ds-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    /* ─── Author badge (form-exemple pattern) ─────────────────── */
+    .author-badge {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-top: var(--ds-space-7);
+      padding-top: var(--ds-space-6);
+      border-top: 1px solid var(--ds-color-border);
+    }
+
+    .author-avatar {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--ds-color-border-med);
+    }
+
+    .author-info { display: flex; flex-direction: column; gap: 3px; }
+
+    .author-idealized {
+      font-size: 0.72rem;
+      color: var(--ds-color-text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.2rem;
+    }
+
+    .author-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ds-color-text-1);
+    }
+
+    .author-role {
+      font-size: 0.82rem;
+      color: var(--ds-color-text-3);
+    }
+
+    .author-creds {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 0.4rem;
+    }
+
+    .author-cred {
+      font-size: 0.78rem;
+      color: var(--ds-color-text-3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .author-cred::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--ds-color-accent-gradient-diag);
+      flex-shrink: 0;
+    }
+
+    /* ─── Form section ────────────────────────────────────────── */
+    #form-section {
+      display: none;
+    }
+
+    /* ─── Step ────────────────────────────────────────────────── */
+    .step {
+      animation: fadeSlideUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-label {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--ds-space-3);
+    }
+
+    .step-question {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.5rem, 4vw, var(--ds-text-2xl));
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      color: var(--ds-color-text-1);
+      margin-bottom: var(--ds-space-5);
+    }
+
+    .step-hint {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      font-style: italic;
+      margin-top: var(--ds-space-2);
+    }
+
+    /* ─── Input styles ────────────────────────────────────────── */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-1);
+      transition: var(--ds-transition-base);
+      outline: none;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="tel"]::placeholder {
+      color: var(--ds-color-text-3);
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-focus);
+      box-shadow: 0 0 0 4px var(--ds-color-focus-ring);
+    }
+
+    /* ─── Select options ──────────────────────────────────────── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-4);
+      padding: 1.4rem 1.75rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      cursor: pointer;
+      transition: var(--ds-transition-base);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ds-color-accent-gradient-diag);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .option-btn:hover {
+      border-color: rgba(236, 72, 153, 0.35);
+      background: var(--ds-color-surface-2);
+      transform: translateX(4px);
+    }
+
+    .option-btn:hover::before { opacity: 0.06; }
+
+    .option-btn.selected {
+      border-color: var(--ds-color-accent-end);
+      background: linear-gradient(135deg, var(--ds-color-accent-soft-2), rgba(236,72,153,0.10));
+      box-shadow: 0 0 22px rgba(236, 72, 153, 0.20);
+    }
+
+    .option-btn.selected::before { opacity: 0.08; }
+
+    .option-key {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: var(--ds-radius-sm);
+      background: var(--ds-color-surface-3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--ds-text-sm);
+      font-weight: 600;
+      color: var(--ds-color-text-3);
+      position: relative;
+      z-index: 1;
+      transition: var(--ds-transition-fast);
+    }
+
+    .option-btn.selected .option-key {
+      background: var(--ds-color-accent-gradient-diag);
+      color: var(--ds-color-text-1);
+    }
+
+    .option-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .option-title {
+      font-size: var(--ds-text-base);
+      font-weight: 600;
+      color: var(--ds-color-text-1);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .option-desc {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-3);
+      line-height: 1.5;
+    }
+
+    /* ─── Nav buttons (sticky bottom) ────────────────────────── */
+    .nav-backdrop {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 9rem;
+      background: linear-gradient(to top, rgba(3,3,3,0.95) 40%, transparent);
+      z-index: calc(var(--ds-z-nav) - 2);
+      pointer-events: none;
+    }
+
+    .nav-row {
+      position: fixed;
+      bottom: var(--ds-space-6);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: var(--ds-z-nav);
+      display: flex;
+      gap: var(--ds-space-3);
+      width: calc(100% - 3rem);
+      max-width: var(--ds-form-max);
+    }
+
+    .btn-back {
+      padding: 1rem 1.5rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-2);
+      cursor: pointer;
+      transition: var(--ds-transition-fast);
+    }
+
+    .btn-back:hover {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-border-med);
+    }
+
+    .btn-next {
+      flex: 1;
+      padding: 1rem 2rem;
+      background: var(--ds-color-accent-gradient-diag);
+      border: none;
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 600;
+      color: var(--ds-color-text-1);
+      cursor: pointer;
+      transition: var(--ds-transition-base);
+      box-shadow: var(--ds-shadow-btn-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-next::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      opacity: 0;
+      transition: var(--ds-transition-fast);
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ds-shadow-btn-primary-hover);
+    }
+
+    .btn-next:hover::before { opacity: 1; }
+
+    .btn-next:disabled {
+      background: var(--ds-color-surface-3);
+      color: var(--ds-color-text-3);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ─── Footer keyboard hint ────────────────────────────────── */
+    .kbd-hint {
+      position: fixed;
+      bottom: 5px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 11px;
+      color: var(--ds-color-text-3);
+      z-index: calc(var(--ds-z-nav) - 1);
+      pointer-events: none;
+    }
+
+    .kbd-hint kbd {
+      display: inline-block;
+      padding: 1px 5px;
+      border: 1px solid var(--ds-color-border-med);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--ds-color-text-2);
+      background: var(--ds-color-surface);
+      vertical-align: middle;
+    }
+
+    /* ─── Loading spinner ─────────────────────────────────────── */
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-9) 0;
+      animation: fadeSlideUp 0.4s both;
+    }
+
+    .spinner {
+      width: 44px; height: 44px;
+      border: 2.5px solid var(--ds-color-border);
+      border-top-color: var(--ds-color-accent-end);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: var(--ds-text-base);
+      color: var(--ds-color-text-3);
+    }
+
+    /* ─── Success screen ──────────────────────────────────────── */
+    .success-wrap {
+      animation: fadeSlideUp 0.5s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .success-icon {
+      width: 64px; height: 64px;
+      background: var(--ds-color-accent-gradient-diag);
+      border-radius: var(--ds-radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: var(--ds-space-6);
+      box-shadow: var(--ds-shadow-4);
+    }
+
+    .success-headline {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.75rem, 4vw, var(--ds-text-3xl));
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      background: var(--ds-color-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--ds-space-4);
+    }
+
+    .success-body {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-2);
+      line-height: 1.75;
+      max-width: 460px;
+      margin-bottom: var(--ds-space-6);
+    }
+
+    .success-card {
+      background: var(--ds-color-surface);
+      border: 1px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-xl);
+      padding: var(--ds-space-5) var(--ds-space-6);
+      margin-bottom: var(--ds-space-6);
+    }
+
+    .success-card-label {
+      font-size: var(--ds-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+      margin-bottom: var(--ds-space-2);
+    }
+
+    .success-card-value {
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-1);
+    }
+
+    .success-card-plan {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--ds-space-2);
+      padding: 4px 12px;
+      background: var(--ds-color-accent-soft-2);
+      border: 1px solid var(--ds-color-accent-border);
+      border-radius: var(--ds-radius-full);
+      font-size: var(--ds-text-sm);
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+
+    .success-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--ds-color-border);
+      margin: var(--ds-space-6) 0;
+    }
+
+    .success-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-3);
+      margin-bottom: var(--ds-space-7);
+    }
+
+    .success-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ds-space-2);
+      padding: 1.1rem 2rem;
+      background: var(--ds-color-accent-gradient-diag);
+      border: none;
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 600;
+      color: var(--ds-color-text-1);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--ds-transition-base);
+      box-shadow: var(--ds-shadow-btn-primary);
+    }
+
+    .success-cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ds-shadow-btn-primary-hover);
+    }
+
+    .success-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ds-space-2);
+      padding: 1rem 2rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body);
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-2);
+      text-decoration: none;
+      transition: var(--ds-transition-fast);
+    }
+
+    .success-cta-secondary:hover {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-border-med);
+      color: var(--ds-color-text-1);
+    }
+
+    /* ─── Responsive ──────────────────────────────────────────── */
+    @media (min-width: 640px) {
+      .container {
+        padding: var(--ds-space-6) var(--ds-container-pad);
+        padding-bottom: 10rem;
+      }
+
+      .incentives {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--ds-space-4);
+      }
+
+      .incentive-item {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .shape-3, .shape-4, .shape-5 { display: none; }
+      .author-badge { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+    <div class="bg-shape bg-shape-3"></div>
+    <div class="bg-shape bg-shape-4"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Nav -->
+    <div id="nav-root"></div>
+
+    <!-- ─── HERO ──────────────────────────────────────────────── -->
+    <section id="hero" aria-labelledby="hero-headline">
+
+      <p class="page-hero-badge">Lista de espera · Lançamento em breve</p>
+
+      <h1 class="page-hero-title" id="hero-headline">
+        Você decidiu parar de improvisar.<br>
+        <span class="hero-title-gradient">Esse é o começo do processo.</span>
+      </h1>
+
+      <p class="page-hero-subtitle">
+        O Omentor.Studio está sendo construído. Quem entrar na lista agora garante acesso antecipado e preço de fundador — antes do lançamento público.
+      </p>
+
+      <div class="incentives" role="list" aria-label="Benefícios para quem entra na lista">
+        <div class="incentive-item" role="listitem">
+          <span class="incentive-icon" aria-hidden="true">✦</span>
+          <span>Acesso antecipado antes de qualquer outra pessoa</span>
+        </div>
+        <div class="incentive-item" role="listitem">
+          <span class="incentive-icon" aria-hidden="true">✦</span>
+          <span>Preço de fundador — só para quem entrar agora</span>
+        </div>
+        <div class="incentive-item" role="listitem">
+          <span class="incentive-icon" aria-hidden="true">✦</span>
+          <span>Influência direta nas funcionalidades da plataforma</span>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <button class="btn-primary" id="hero-cta" onclick="startForm()" aria-label="Entrar na lista de espera do Omentor.Studio">
+          Quero entrar na lista →
+          <svg width="14" height="14"><use href="#icon-arrow-right"/></svg>
+        </button>
+        <a href="https://www.youtube.com/watch?v=9s_HQrPyrqE" target="_blank" rel="noopener noreferrer" class="btn-secondary">Ver vídeo demonstrativo</a>
+      </div>
+      <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-3);font-style:italic;margin-top:var(--ds-space-3)">Leva menos de 2 minutos &nbsp;•&nbsp; Sem compromisso</p>
+
+      <div class="author-badge" aria-label="Criado por">
+        <img
+          class="author-avatar"
+          src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+          alt="Foto de Luan L. Bonadie"
+          width="68" height="68"
+          loading="lazy"
+        >
+        <div class="author-info">
+          <span class="author-idealized">Idealizado por</span>
+          <span class="author-name">Luan L. Bonadie</span>
+          <span class="author-role">Estrategista Digital</span>
+          <div class="author-creds">
+            <span class="author-cred">Grupo Ide Comunicação — 10 anos · 140+ clientes · 12 países</span>
+            <span class="author-cred">O Novo Mercado — Engenheiro de Prompt</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FORM SECTION ──────────────────────────────────────── -->
+    <div id="form-section" aria-label="Formulário de lista de espera" style="display:none;">
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progress-wrap" aria-live="polite" aria-label="Progresso do formulário">
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="progress-label">
+          <span id="progress-step-label"></span>
+          <span id="progress-pct-label"></span>
+        </div>
+      </div>
+
+      <!-- Step container -->
+      <div id="step-container"></div>
+
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- Nav backdrop + buttons (shown during form) -->
+  <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true" style="display:none;"></div>
+  <div class="nav-row" id="nav-row" style="display:none;" role="group" aria-label="Navegação do formulário"></div>
+  <div class="kbd-hint" id="kbd-hint" style="display:none;" aria-hidden="true">
+    <kbd>Enter</kbd> para avançar &nbsp;·&nbsp; <kbd>Shift</kbd> + <kbd>Enter</kbd> para voltar
+  </div>
+
+  <script src="./components.js"></script>
+
+  <script>
+    /* ─── Questions ─────────────────────────────────────────── */
+    const steps = [
+      {
+        id: 'nome',
+        type: 'text',
+        question: 'Qual é o seu nome completo?',
+        placeholder: 'Digite seu nome...',
+        label: 'Nome'
+      },
+      {
+        id: 'email',
+        type: 'email',
+        question: 'Qual é o seu e-mail?',
+        placeholder: 'seuemail@exemplo.com',
+        hint: 'Será o e-mail de acesso à plataforma.',
+        label: 'E-mail'
+      },
+      {
+        id: 'whatsapp',
+        type: 'tel',
+        question: 'Seu WhatsApp com DDD?',
+        placeholder: '(11) 99999-9999',
+        hint: 'Só para te avisar quando abrir — sem spam.',
+        label: 'WhatsApp'
+      },
+      {
+        id: 'plano',
+        type: 'select',
+        question: 'Qual plano combina mais com o que você precisa?',
+        label: 'Plano de interesse',
+        options: [
+          {
+            value: 'essencial',
+            title: 'Essencial — R$127',
+            desc: 'Estratégia documentada + 6 templates de posts para Instagram com identidade visual'
+          },
+          {
+            value: 'completo',
+            title: 'Completo — R$297',
+            desc: 'Estratégia + site completo com sua identidade visual criada do zero + posts'
+          },
+          {
+            value: 'indefinido',
+            title: 'Ainda não decidi',
+            desc: 'Quero ver os dois planos no lançamento antes de escolher'
+          }
+        ]
+      },
+      {
+        id: 'area',
+        type: 'select',
+        question: 'Qual é a sua área de atuação?',
+        label: 'Área',
+        options: [
+          { value: 'psicologia',           title: 'Psicologia / Terapia',          desc: '' },
+          { value: 'nutricao',             title: 'Nutrição / Saúde',              desc: '' },
+          { value: 'coaching-mentoria',    title: 'Coaching / Mentoria',           desc: '' },
+          { value: 'consultoria',          title: 'Consultoria / Assessoria',      desc: '' },
+          { value: 'educacao-infoproduto', title: 'Educação / Infoproduto',        desc: '' },
+          { value: 'marketing-branding',   title: 'Marketing / Branding',          desc: '' },
+          { value: 'outro',               title: 'Outra área',                    desc: '' }
+        ]
+      }
+    ];
+
+    /* ─── State ───────────────────────────────────────────────── */
+    let current   = 0;
+    const answers = {};
+
+    /* Pre-fill plano from URL param */
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const planoParam = params.get('plano');
+      if (planoParam) {
+        const validValues = steps.find(s => s.id === 'plano').options.map(o => o.value);
+        if (validValues.includes(planoParam)) answers['plano'] = planoParam;
+      }
+    })();
+
+    /* ─── UI helpers ──────────────────────────────────────────── */
+    function showFormUI() {
+      document.getElementById('nav-backdrop').style.display = 'block';
+      document.getElementById('nav-row').style.display     = 'flex';
+      document.getElementById('kbd-hint').style.display    = 'block';
+    }
+
+    function hideFormUI() {
+      document.getElementById('nav-backdrop').style.display = 'none';
+      document.getElementById('nav-row').style.display     = 'none';
+      document.getElementById('kbd-hint').style.display    = 'none';
+    }
+
+    function updateProgress() {
+      const total = steps.length;
+      const pct   = Math.round(((current + 1) / total) * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-fill').setAttribute('aria-valuenow', pct);
+      document.getElementById('progress-step-label').textContent = `Etapa ${current + 1} de ${total}`;
+      document.getElementById('progress-pct-label').textContent  = pct + '%';
+    }
+
+    /* ─── Render step ─────────────────────────────────────────── */
+    function render() {
+      updateProgress();
+      const step   = steps[current];
+      const isLast = current === steps.length - 1;
+      const value  = answers[step.id] ?? '';
+
+      let inputHtml = '';
+
+      if (step.type === 'select') {
+        const optHtml = step.options.map((opt, i) => {
+          const letter = String.fromCharCode(65 + i);
+          const isSel  = value === opt.value ? ' selected' : '';
+          return `
+            <button
+              class="option-btn${isSel}"
+              onclick="selectOption('${step.id}','${opt.value}',this)"
+              aria-pressed="${isSel ? 'true' : 'false'}"
+              id="opt-${step.id}-${i}"
+            >
+              <span class="option-key" aria-hidden="true">${letter}</span>
+              <span class="option-content">
+                <span class="option-title">${opt.title}</span>
+                ${opt.desc ? `<span class="option-desc">${opt.desc}</span>` : ''}
+              </span>
+            </button>`;
+        }).join('');
+        inputHtml = `<div class="options" role="group" aria-label="${step.question}">${optHtml}</div>`;
+      } else {
+        inputHtml = `
+          <input
+            type="${step.type}"
+            id="input-${step.id}"
+            placeholder="${step.placeholder ?? ''}"
+            value="${value}"
+            autocomplete="${step.id === 'email' ? 'email' : step.id === 'nome' ? 'name' : 'tel'}"
+            aria-label="${step.label}"
+          >`;
+      }
+
+      const hintHtml = step.hint ? `<p class="step-hint" role="note">${step.hint}</p>` : '';
+
+      document.getElementById('step-container').innerHTML = `
+        <div class="step" role="region" aria-label="Etapa ${current + 1}: ${step.label}">
+          <p class="step-label" aria-hidden="true">Etapa ${current + 1} de ${steps.length}</p>
+          <h2 class="step-question">${step.question}</h2>
+          ${inputHtml}
+          ${hintHtml}
+        </div>`;
+
+      // Nav
+      const navRow = document.getElementById('nav-row');
+      navRow.innerHTML = `
+        ${current > 0 ? `<button class="btn-back" id="btn-back" onclick="prev()" aria-label="Voltar para etapa anterior">← Voltar</button>` : ''}
+        <button class="btn-next" id="btn-next" onclick="next()" aria-label="${isLast ? 'Enviar e entrar na lista' : 'Avançar para a próxima etapa'}">
+          ${isLast ? 'Entrar na lista →' : 'Próximo →'}
+        </button>`;
+
+      // Focus input
+      const inp = document.getElementById(`input-${step.id}`);
+      if (inp) setTimeout(() => inp.focus(), 80);
+    }
+
+    /* ─── Form entry ──────────────────────────────────────────── */
+    function startForm() {
+      document.getElementById('hero').style.display        = 'none';
+      document.getElementById('form-section').style.display = 'block';
+      showFormUI();
+      render();
+    }
+
+    /* ─── Select option ───────────────────────────────────────── */
+    function selectOption(id, value, el) {
+      answers[id] = value;
+      el.closest('.options').querySelectorAll('.option-btn').forEach(b => {
+        b.classList.remove('selected');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      el.classList.add('selected');
+      el.setAttribute('aria-pressed', 'true');
+    }
+
+    /* ─── Save current answer ─────────────────────────────────── */
+    function saveAnswer() {
+      const step = steps[current];
+      if (step.type !== 'select') {
+        const inp = document.getElementById(`input-${step.id}`);
+        if (inp) answers[step.id] = inp.value.trim();
+      }
+    }
+
+    /* ─── Validate current ────────────────────────────────────── */
+    function validate() {
+      const step  = steps[current];
+      const value = answers[step.id] ?? '';
+      if (!value) return false;
+      if (step.type === 'email') {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+      return true;
+    }
+
+    /* ─── Next / Prev ─────────────────────────────────────────── */
+    function next() {
+      saveAnswer();
+      if (!validate()) {
+        const inp = document.getElementById(`input-${steps[current].id}`);
+        if (inp) { inp.focus(); inp.style.borderColor = 'var(--ds-color-error)'; }
+        return;
+      }
+      if (current < steps.length - 1) {
+        current++;
+        render();
+      } else {
+        submit();
+      }
+    }
+
+    function prev() {
+      saveAnswer();
+      if (current > 0) { current--; render(); }
+    }
+
+    /* ─── Submit ──────────────────────────────────────────────── */
+    async function submit() {
+      const container = document.getElementById('step-container');
+      document.getElementById('progress-wrap').style.display = 'none';
+
+      container.innerHTML = `
+        <div class="loading-wrap" role="status" aria-live="polite" aria-label="Enviando seus dados">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="loading-text">Registrando seu interesse...</p>
+        </div>`;
+
+      hideFormUI();
+
+      // Webhook (substitua pelo endpoint real — ex: Make, n8n, Zapier)
+      const WEBHOOK_URL = 'https://webhooks.envia.click/webhook/3c120534-5665-4c0b-83a9-0b5cd5d2a5ab';
+      const WA_NUMBER   = '5532991313371';
+
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...answers,
+            source: 'comecar.html',
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (_) {
+        // Fail silently — user still sees success
+      }
+
+      showSuccess();
+    }
+
+    /* ─── Escape HTML ─────────────────────────────────────────── */
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    /* ─── Success screen ──────────────────────────────────────── */
+    function showSuccess() {
+      const container = document.getElementById('step-container');
+      const planNames = {
+        essencial:  'Plano Essencial — R$127',
+        completo:   'Plano Completo — R$297',
+        indefinido: 'A definir no lançamento'
+      };
+      const areaNames = {
+        'psicologia':           'Psicologia / Terapia',
+        'nutricao':             'Nutrição / Saúde',
+        'coaching-mentoria':    'Coaching / Mentoria',
+        'consultoria':          'Consultoria / Assessoria',
+        'educacao-infoproduto': 'Educação / Infoproduto',
+        'marketing-branding':   'Marketing / Branding',
+        'outro':                'Outra área'
+      };
+
+      const summaryItems = [
+        ['Nome',            answers['nome']      ?? '—'],
+        ['E-mail',          answers['email']     ?? '—'],
+        ['WhatsApp',        answers['whatsapp']  ?? '—'],
+        ['Plano de interesse', planNames[answers['plano']] ?? '—'],
+        ['Área de atuação', areaNames[answers['area']]    ?? '—']
+      ];
+
+      const summaryHtml = summaryItems.map(([label, value], index) => `
+        <p class="success-card-label">${label}</p>
+        <p class="success-card-value">${escapeHtml(value)}</p>
+        ${index < summaryItems.length - 1 ? '<div style="height:1px;background:var(--ds-color-border);margin:var(--ds-space-4) 0;" aria-hidden="true"></div>' : ''}
+      `).join('');
+
+      container.innerHTML = `
+        <div class="success-wrap" role="region" aria-label="Cadastro confirmado">
+          <div class="success-icon" aria-hidden="true">✓</div>
+
+          <h2 class="success-headline">Você está na lista.</h2>
+
+          <p class="success-body">
+            Assim que o Omentor.Studio abrir, você será avisado primeiro — com preço e condições exclusivos para quem entrou antes do lançamento.
+          </p>
+
+          <div class="success-card" aria-label="Resumo do cadastro">
+            ${summaryHtml}
+          </div>
+
+          <div class="success-cta-wrap">
+            <a href="mentoria.html" class="success-cta-primary" aria-label="Conhecer a Mentoria 1:1 de Luan Bonadie">
+              Conhecer a Mentoria 1:1 →
+            </a>
+            <a href="index.html" class="success-cta-secondary" aria-label="Voltar para a página inicial do Omentor.Studio">
+              ← Voltar para o início
+            </a>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:var(--ds-space-4);margin-top:var(--ds-space-6);padding-top:var(--ds-space-6);border-top:1px solid var(--ds-color-border);">
+            <img
+              class="author-avatar"
+              src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+              alt="Foto de Luan L. Bonadie"
+              width="56" height="56"
+              loading="lazy"
+              style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--ds-color-border-med);"
+            >
+            <div style="display:flex;flex-direction:column;gap:3px;">
+              <span style="font-size:var(--ds-text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-3);">Idealizado por</span>
+              <span style="font-weight:600;font-size:var(--ds-text-base);color:var(--ds-color-text-1);">Luan L. Bonadie</span>
+              <span style="font-size:var(--ds-text-sm);color:var(--ds-color-text-3);">Estrategista Digital · 10 anos · 140+ clientes · 12 países</span>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ─── Keyboard navigation ─────────────────────────────────── */
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('form-section').style.display === 'none') return;
+      if (document.querySelector('.loading-wrap') || document.querySelector('.success-wrap')) return;
+
+      if (e.key === 'Enter' && e.shiftKey) { e.preventDefault(); prev(); return; }
+      if (e.key === 'Enter' && !e.target.matches('textarea')) { e.preventDefault(); next(); }
+    });
+  </script>
+
+</body>
+</html>
