@@ -3,7 +3,7 @@
    App-specific layer layered on top of design-system/base.css.
    ============================================================ */
 
-@import url('../../design-system/base.css');
+@import url('./design-system/base.css');
 .hero {
   min-height: 100vh;
   display: flex;
