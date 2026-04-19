@@ -2585,3 +2585,12 @@ body.hide-header .page-hero {
     padding-bottom: 12rem;
   }
 }
+
+/* ── Hidden Elements ───────────────────── */
+.pricing-card-price {
+  display: none !important;
+}
+
+.hidden {
+  display: none !important;
+}
