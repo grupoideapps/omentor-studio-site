@@ -2591,6 +2591,17 @@ body.hide-header .page-hero {
   display: none !important;
 }
 
+.pricing-pills {
+  display: none !important;
+}
+
 .hidden {
   display: none !important;
+}
+
+/* ── Pricing Card Alignment ───────────────── */
+.pricing-card-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
