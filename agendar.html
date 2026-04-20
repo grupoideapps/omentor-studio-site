@@ -14,6 +14,24 @@
   <!-- Design System -->
   <link rel="stylesheet" href="./style.css">
 
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '973947858441297');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=973947858441297&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
     /* ─── Page-specific overrides (form pages share a common skin) ─── */
     .form-page-container {
@@ -1000,72 +1018,11 @@
     }).catch(() => {});
 
     setTimeout(() => {
-      const msg = encodeURIComponent(
-        `Olá, Luan. Me cadastrei no site do Omentor.Studio.\n\n` +
-        `Meu nome é ${answers['nome'] ?? ''}.\n` +
-        `Atuo na área de ${answers['area'] ?? ''}.\n` +
-        `Estou buscando: ${answers['necessidade'] ?? ''}.\n` +
-        (answers['contexto'] ? `\nContexto: ${answers['contexto']}` : '')
-      );
-      const waUrl = `https://wa.me/${WA_NUMBER}?text=${msg}`;
-      showSuccess(waUrl);
+      // Salvar respostas em sessionStorage para obrigado.html
+      sessionStorage.setItem('form_answers', JSON.stringify(answers));
+      // Redirecionar para página de obrigado
+      window.location.href = './obrigado.html';
     }, 1200);
-  }
-
-  function showSuccess(waUrl) {
-    const summaryItems = [
-      ['Nome', answers['nome'] ?? '—'],
-      ['E-mail', answers['email'] ?? '—'],
-      ['WhatsApp', answers['whatsapp'] ?? '—'],
-      ['Área', answers['area'] ?? '—'],
-      ['O que busca', answers['necessidade'] ?? '—'],
-      ['Contexto', answers['contexto'] ?? '—']
-    ];
-
-    const summaryHtml = summaryItems.map(([label, value], index) => `
-      <p class="fp-sum-label">${label}</p>
-      <p class="fp-sum-value">${escapeHtml(value)}</p>
-      ${index < summaryItems.length - 1 ? '<div class="fp-sep" aria-hidden="true"></div>' : ''}
-    `).join('');
-
-    document.getElementById('fp-step').innerHTML = `
-      <div class="fp-success">
-        <div class="fp-success-icon" aria-hidden="true">✓</div>
-
-        <h1 class="fp-success-headline">Tudo certo.</h1>
-
-        <p class="fp-success-body">
-          Confirme os dados e finalize o agendamento.
-        </p>
-
-        <div class="fp-summary-card" aria-label="Resumo do agendamento">
-          ${summaryHtml}
-        </div>
-
-        <div class="fp-cta-wrap">
-          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="fp-cta-primary" aria-label="Abrir WhatsApp com mensagem pré-preenchida para Luan Bonadie">
-            Abrir WhatsApp e concluir →
-          </a>
-          <a href="./mentoria.html" class="fp-cta-secondary" aria-label="Voltar para a página da Mentoria">
-            ← Voltar para a Mentoria
-          </a>
-        </div>
-
-        <div class="fp-author">
-          <img
-            class="fp-avatar"
-            src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
-            alt="Foto de Luan L. Bonadie"
-            width="56" height="56"
-            loading="lazy"
-          >
-          <div class="fp-author-text">
-            <span class="fp-author-eyebrow">Mentoria conduzida por</span>
-            <span class="fp-author-name">Luan L. Bonadie</span>
-            <span class="fp-author-role">Estrategista Digital · 10 anos · 140+ clientes · 12 países</span>
-          </div>
-        </div>
-      </div>`;
   }
 
   /* ─── Keyboard ───────────────────────────────────────────── */

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-root=".">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento Confirmado — Omentor.Studio</title>
+  <meta name="description" content="Agendamento confirmado! Luan vai te chamar em breve para confirmar o horário da sua call.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '973947858441297');
+    fbq('track', 'PageView');
+    fbq('track', 'Lead');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=973947858441297&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <style>
+    /* ─── Page-specific overrides (success page) ─── */
+    .success-page-container {
+      max-width: var(--ds-form-max);
+      margin: 0 auto;
+      padding: 0 var(--ds-container-pad-sm);
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+      position: relative;
+      z-index: var(--ds-z-content);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .success-icon {
+      width: 60px; height: 60px;
+      background: var(--ds-color-accent-gradient-diag);
+      border-radius: var(--ds-radius-xl);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin-bottom: var(--ds-space-6);
+      box-shadow: var(--ds-shadow-4);
+    }
+
+    .success-headline {
+      font-family: var(--ds-font-display);
+      font-size: clamp(1.75rem, 4vw, var(--ds-text-3xl));
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      background: var(--ds-color-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--ds-space-4);
+      text-align: center;
+    }
+
+    .success-body {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-2);
+      line-height: 1.75;
+      max-width: 460px;
+      margin-bottom: var(--ds-space-6);
+      text-align: center;
+    }
+
+    .summary-card {
+      width: 100%;
+      background: var(--ds-color-surface);
+      border: 1px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-xl);
+      padding: var(--ds-space-5) var(--ds-space-6);
+      margin-bottom: var(--ds-space-6);
+    }
+
+    .sum-label {
+      font-size: var(--ds-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+      margin-bottom: var(--ds-space-2);
+    }
+
+    .sum-value {
+      font-size: var(--ds-text-base);
+      font-weight: 500;
+      color: var(--ds-color-text-1);
+    }
+
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: var(--ds-space-4);
+      border-bottom: 1px solid var(--ds-color-border);
+    }
+
+    .sum-row:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .cta-wrap {
+      display: flex; flex-direction: column;
+      gap: var(--ds-space-3); margin-bottom: var(--ds-space-7);
+      width: 100%;
+    }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-2);
+      padding: 1.1rem 2rem;
+      background: var(--ds-color-accent-gradient-diag);
+      border: none; border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body); font-size: var(--ds-text-base); font-weight: 600;
+      color: var(--ds-color-text-1); text-decoration: none; cursor: pointer;
+      transition: var(--ds-transition-base);
+      box-shadow: var(--ds-shadow-btn-primary);
+    }
+
+    .cta-primary:hover { transform: translateY(-2px); box-shadow: var(--ds-shadow-btn-primary-hover); }
+
+    .cta-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-2);
+      padding: 1rem 2rem;
+      background: var(--ds-color-surface);
+      border: 2px solid var(--ds-color-border);
+      border-radius: var(--ds-radius-lg);
+      font-family: var(--ds-font-body); font-size: var(--ds-text-base); font-weight: 500;
+      color: var(--ds-color-text-2); text-decoration: none;
+      transition: var(--ds-transition-fast);
+    }
+
+    .cta-secondary:hover {
+      background: var(--ds-color-surface-2);
+      border-color: var(--ds-color-border-med);
+      color: var(--ds-color-text-1);
+    }
+
+    .author {
+      display: flex; align-items: flex-start; gap: var(--ds-space-4);
+      padding-top: var(--ds-space-6);
+      border-top: 1px solid var(--ds-color-border);
+      width: 100%;
+    }
+
+    .avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+      border: 1px solid var(--ds-color-border-med);
+    }
+
+    .author-text { display: flex; flex-direction: column; gap: 3px; }
+
+    .author-eyebrow {
+      font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--ds-color-text-3);
+    }
+
+    .author-name { font-weight: 600; font-size: var(--ds-text-base); color: var(--ds-color-text-1); }
+    .author-role { font-size: var(--ds-text-sm); color: var(--ds-color-text-3); }
+
+    @media (max-width: 480px) {
+      .success-page-container { padding: 0 var(--ds-space-5); padding-top: 4rem; padding-bottom: 4rem; }
+      .summary-card { padding: var(--ds-space-4) var(--ds-space-5); }
+    }
+
+    @media (min-width: 640px) {
+      .success-page-container { padding: 0 var(--ds-container-pad); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background shapes -->
+<div class="bg-shapes" aria-hidden="true">
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
+  <div class="bg-shape bg-shape-4"></div>
+</div>
+
+<main class="success-page-container" role="main" aria-labelledby="success-title">
+
+  <div class="success-icon" aria-hidden="true">✓</div>
+
+  <h1 class="success-headline" id="success-title">Tudo certo.</h1>
+
+  <p class="success-body">
+    Confirme os dados e finalize o agendamento.
+  </p>
+
+  <div class="summary-card" aria-label="Resumo do agendamento" id="summary-container">
+    <!-- Preenchido via JavaScript -->
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#" id="whatsapp-btn" target="_blank" rel="noopener noreferrer" class="cta-primary" aria-label="Abrir WhatsApp com mensagem pré-preenchida para Luan Bonadie">
+      Abrir WhatsApp e concluir →
+    </a>
+    <a href="./mentoria.html" class="cta-secondary" aria-label="Voltar para a página da Mentoria">
+      ← Voltar para a Mentoria
+    </a>
+  </div>
+
+  <div class="author">
+    <img
+      class="avatar"
+      src="https://grupoidecomunicacao.com/wp-content/uploads/2025/12/foto-luan-2-e1766272929502.webp"
+      alt="Foto de Luan L. Bonadie"
+      width="56" height="56"
+      loading="lazy"
+    >
+    <div class="author-text">
+      <span class="author-eyebrow">Mentoria conduzida por</span>
+      <span class="author-name">Luan L. Bonadie</span>
+      <span class="author-role">Estrategista Digital · 10 anos · 140+ clientes · 12 países</span>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const WA_NUMBER = '5532991313371';
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Recuperar dados do sessionStorage (passados por agendar.html)
+    const answers = JSON.parse(sessionStorage.getItem('form_answers') || '{}');
+
+    // Renderizar resumo
+    const summaryItems = [
+      ['Nome', answers['nome'] ?? '—'],
+      ['E-mail', answers['email'] ?? '—'],
+      ['WhatsApp', answers['whatsapp'] ?? '—'],
+      ['Área', answers['area'] ?? '—'],
+      ['O que busca', answers['necessidade'] ?? '—'],
+      ['Contexto', answers['contexto'] ?? '—']
+    ];
+
+    const summaryHtml = summaryItems.map(([label, value]) => `
+      <div class="sum-row">
+        <div>
+          <p class="sum-label">${label}</p>
+          <p class="sum-value">${escapeHtml(value)}</p>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('summary-container').innerHTML = summaryHtml;
+
+    // Montar mensagem WhatsApp
+    const msg = encodeURIComponent(
+      `Olá, Luan. Me cadastrei no site do Omentor.Studio.\n\n` +
+      `Meu nome é ${answers['nome'] ?? ''}.\n` +
+      `Atuo na área de ${answers['area'] ?? ''}.\n` +
+      `Estou buscando: ${answers['necessidade'] ?? ''}.\n` +
+      (answers['contexto'] ? `\nContexto: ${answers['contexto']}` : '')
+    );
+
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+    document.getElementById('whatsapp-btn').href = waUrl;
+
+    // Limpar sessionStorage
+    sessionStorage.removeItem('form_answers');
+  });
+</script>
+
+</body>
+</html>
