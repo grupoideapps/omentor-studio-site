@@ -2,7 +2,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "omentor-studio-site",
   "compatibility_date": "2026-04-26",
+  "routes": [
+    {
+      "pattern": "omentor.studio/a-maquina*",
+      "zone_name": "omentor.studio"
+    }
+  ],
   "assets": {
-    "directory": "./a-maquina"
+    "directory": "."
   }
 }
