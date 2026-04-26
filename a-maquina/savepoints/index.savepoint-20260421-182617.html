@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{NOME_PRODUTO}}</title>
+  <meta name="description" content="{{META_DESCRICAO}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Nunito:wght@700&family=Overpass:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      font-family: 'Overpass', sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-gray);
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3, h4, h5, h6, p, li, span, a {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* ============================================================
+       DESIGN TOKENS — Paleta Low Ticket
+       ============================================================ */
+    :root {
+      --red:       #AD1F1F;    /* seção label/separador */
+      --red-dark:  #990A0A;    /* box de confirmação */
+      --dark:      #303030;    /* fundo escuro (passo a passo, entregáveis, valor) */
+      --gray-bg:   #E7E7E7;    /* fundo cinza claro */
+      --white:     #FFFFFF;
+      --text-gray: #707070;    /* corpo de texto */
+      --text-dark: #000000;
+      --green:     #049A6A;    /* preço / destaque positivo */
+      --price-text:#66353A;    /* "por apenas:" */
+      --opt1-bg:   #FFF1F4;    /* caixa opção 1 (ruim) */
+      --opt1-text: #e4343b;
+      --opt2-bg:   #F3FFFB;    /* caixa opção 2 (boa) */
+      --opt2-text: #049a6a;
+      --container: 760px;
+      --container-wide: 980px;
+      --section-y: clamp(46px, 7vw, 72px);
+      --lh-tight: 1.3;
+      --lh-body: 1.4;
+      --fs-heading-xl: clamp(28px, 3vw, 32px);
+      --fs-heading-lg: clamp(22px, 2.4vw, 26px);
+      --fs-body-lg: clamp(18px, 1.9vw, 20px);
+      --fs-body-md: 18px;
+      --card-radius: 24px;
+      --card-radius-sm: 14px;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      --transition-fast: 180ms ease;
+    }
+
+    /* ============================================================
+       TEMPLATE SYSTEM (replicável)
+       ============================================================ */
+    #hero, #depoimentos, #ruminacao, #passos, #beneficios, #bonus,
+    #paraquem, #recapitulando, #comoacessar, #autoridade, #conversa, #faq,
+    .price-section {
+      padding-top: var(--section-y);
+      padding-bottom: var(--section-y);
+    }
+    .step-card, .benefit-item, .ent-card, .bonus-card, .option-box, .access-step {
+      border-radius: var(--card-radius-sm);
+      box-shadow: var(--card-shadow);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .step-card:hover, .benefit-item:hover, .ent-card:hover, .bonus-card:hover,
+    .option-box:hover, .access-step:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.1);
+    }
+    .dep-item img, .step-image img, .ent-mockup img, .bonus-img, .price-mockup, .auth-photo {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ============================================================
+       LAYOUT UTILITÁRIOS
+       ============================================================ */
+    .section-wrapper {
+      width: 100%;
+      padding: 50px 0;
+    }
+    .section-wrapper.dark    { background: var(--dark); }
+    .section-wrapper.gray    { background: var(--gray-bg); padding: 50px 20px; }
+    .section-wrapper.white   { background: var(--white); }
+    .section-wrapper.dark-price { background: var(--dark); padding: 50px 0; }
+
+    .inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .inner-narrow { max-width: 580px; margin: 0 auto; padding: 0 20px; }
+    .inner-wide   { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* ============================================================
+       TIPOGRAFIA
+       ============================================================ */
+    .h-hero {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; line-height: 1.3;
+      max-width: 54%; margin: 0 auto;
+    }
+    .h-hero b { font-weight: 400; }
+
+    .h-section {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; line-height: 1.35;
+    }
+    .h-section b { font-weight: 400; }
+    .h-section.white-text { color: #ffffff; }
+    .h-section.bold { font-weight: 400; }
+
+    .h-sub {
+      font-size: 26px; font-weight: 400; color: var(--text-gray);
+      text-align: center; line-height: 1.4;
+    }
+    .h-sub b { font-weight: 400; }
+    .h-sub.white-text { color: #ffffff; }
+    .h-sub.left-text  { text-align: left; }
+
+    .h-step-label {
+      font-family: 'Nunito', sans-serif;
+      font-size: var(--fs-heading-lg);
+      font-weight: 700;
+      color: var(--dark);
+      text-align: left;
+      line-height: var(--lh-tight);
+    }
+    .h-step-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: var(--fs-heading-lg);
+      font-weight: 700;
+      color: var(--dark);
+      text-align: left;
+      line-height: var(--lh-tight);
+      margin-top: 6px;
+    }
+
+    .body-text {
+      font-size: 18px; font-weight: 400; color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       BLOCO 1 — HERO (Vender Sozinho)
+       ============================================================ */
+    #hero {
+      background: var(--gray-bg);
+      padding: 50px 20px;
+      text-align: center;
+    }
+    #hero .hero-logo {
+      width: 16%; max-width: 120px; min-width: 60px;
+      margin: 0 auto 24px;
+    }
+    #hero .hero-mockup {
+      width: 54%; max-width: 640px; min-width: 260px;
+      margin: 32px auto 0;
+    }
+
+    /* VARIANTE: Hero com Antes/Depois */
+    #hero .hero-before-after {
+      width: 54%; max-width: 520px; min-width: 240px;
+      margin: 32px auto 0;
+    }
+    #hero .hero-before-after-grid {
+      width: min(82vw, 760px);
+      margin: 32px auto 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      position: relative;
+    }
+    #hero .hero-ba-arrow {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -40%);
+      width: clamp(72px, 10vw, 116px);
+      height: auto;
+      z-index: 4;
+      pointer-events: none;
+      filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.22));
+    }
+    #hero .hero-ba-card {
+      background: #f0f0f0;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 3px solid #fff;
+      position: relative;
+      overflow: visible;
+    }
+    #hero .hero-ba-pill {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      min-width: 146px;
+      height: 42px;
+      padding: 5px 16px 5px 6px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      backdrop-filter: saturate(120%);
+    }
+    #hero .hero-ba-pill.before {
+      background: linear-gradient(180deg, #f83a3a 0%, #cf1c1c 100%);
+    }
+    #hero .hero-ba-pill.after {
+      background: linear-gradient(180deg, #23d16f 0%, #12a84f 100%);
+    }
+    #hero .hero-ba-pill-icon {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit !important;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    }
+    #hero .hero-ba-pill.before .hero-ba-pill-icon { color: #d81f1f !important; }
+    #hero .hero-ba-pill.after .hero-ba-pill-icon { color: #12a84f !important; }
+    #hero .hero-ba-pill-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+    #hero .hero-ba-label {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      font-variant-ligatures: none;
+      letter-spacing: 0.3px !important;
+      color: #fff !important;
+      text-align: center;
+      margin: 0;
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+    #hero .hero-ba-img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      height: auto;
+      min-height: 420px;
+      max-height: 640px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* ============================================================
+       BLOCO 2 — DEPOIMENTOS
+       ============================================================ */
+    #depoimentos { background: var(--white); padding: 50px 20px; }
+    #depoimentos .dep-title {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; line-height: 1.35;
+      max-width: 62%; margin: 0 auto 40px;
+    }
+    #depoimentos .dep-title b { font-weight: 400; }
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      max-width: 920px;
+      justify-items: center;
+      margin: 0 auto;
+    }
+    .dep-item {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+    }
+    .dep-card {
+      position: relative;
+      background: linear-gradient(180deg, #edf7ff 0%, #dff1ff 100%);
+      border: 3px solid #ffffff;
+      border-radius: 16px;
+      padding: 12px;
+      min-height: 0;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      overflow: visible;
+    }
+    .dep-pill {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: min(82%, 320px);
+      min-height: 56px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #1664d9 0%, #1255b7 100%);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      z-index: 3;
+    }
+    .dep-pill-label {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: 17px !important;
+      font-weight: 700 !important;
+      line-height: 1.1;
+      letter-spacing: 0 !important;
+      white-space: nowrap;
+      color: #fff !important;
+    }
+    .dep-media {
+      background: linear-gradient(180deg, #d8f0ff 0%, #f7fbff 100%);
+      border: 1px solid rgba(48, 48, 48, 0.08);
+      border-radius: 14px;
+      margin-top: 26px;
+      overflow: hidden;
+    }
+    .dep-media img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ============================================================
+       BLOCO 3 — RUMINAÇÃO (Agitação da Dor)
+       ============================================================ */
+    #ruminacao { background: var(--gray-bg); padding: 50px 20px; }
+    #ruminacao .rum-headline {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; line-height: 1.35; max-width: 54%;
+      margin: 0 auto 24px;
+    }
+    #ruminacao .rum-headline b { font-weight: 400; }
+    #ruminacao .rum-sub {
+      font-size: 22px; font-weight: 400; color: #000000;
+      text-align: center; margin-bottom: 24px;
+    }
+    #ruminacao .rum-thoughts-img {
+      width: 54%; max-width: 520px; min-width: 240px;
+      margin: 0 auto 32px;
+    }
+    #ruminacao .rum-thoughts-board {
+      display: flex;
+      justify-content: center;
+      width: min(100%, 720px);
+      margin: 0 auto 32px;
+    }
+    #ruminacao .rum-stage {
+      position: relative;
+      width: min(92vw, 600px);
+      min-height: 620px;
+      --rum-phone-w: clamp(220px, 28vw, 290px);
+      --rum-bubble-w: min(34vw, 190px);
+      --rum-left-overlap: 0.74;
+      --rum-right-overlap: 0.33;
+    }
+    #ruminacao .rum-board-phone {
+      position: absolute;
+      left: 50%;
+      top: 70px;
+      transform: translateX(-50%);
+      width: var(--rum-phone-w);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+      border: 3px solid rgba(255, 255, 255, 0.7);
+      background: linear-gradient(180deg, #d8f0ff 0%, #f7fbff 100%);
+      z-index: 1;
+    }
+    #ruminacao .rum-board-phone img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      display: block;
+    }
+    #ruminacao .rum-thought {
+      position: absolute;
+      width: var(--rum-bubble-w);
+      min-width: 150px;
+      background: linear-gradient(180deg, #8c25d9 0%, #7318bf 100%);
+      border-radius: 14px;
+      padding: 16px 18px;
+      box-shadow: 0 12px 24px rgba(103, 20, 171, 0.22);
+      z-index: 2;
+    }
+    #ruminacao .rum-thought::after {
+      display: none;
+    }
+    #ruminacao .rum-thought.tl { left: calc(50% - (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-left-overlap))); top: 156px; }
+    #ruminacao .rum-thought.tl::after { right: -44px; top: -28px; }
+    #ruminacao .rum-thought.tr { left: calc(50% + (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-right-overlap))); right: auto; top: 36px; }
+    #ruminacao .rum-thought.tr::after { left: -42px; bottom: -34px; transform: scaleX(-1); }
+    #ruminacao .rum-thought.bl { left: calc(50% - (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * 0.78)); top: 458px; bottom: auto; }
+    #ruminacao .rum-thought.bl::after { right: -42px; top: -30px; }
+    #ruminacao .rum-thought.br { left: calc(50% + (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-right-overlap))); right: auto; top: 334px; }
+    #ruminacao .rum-thought.br::after { left: -42px; top: -30px; transform: scaleX(-1); }
+    #ruminacao .rum-thought-text {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+      letter-spacing: 0 !important;
+      color: #fff !important;
+      text-align: center;
+      margin: 0;
+    }
+    #ruminacao .rum-eusei {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; margin-bottom: 16px;
+    }
+    /* Caixa de confirmação vermelha */
+    .confirmation-box {
+      background: var(--red-dark);
+      border-radius: 12px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 600px;
+      margin: 24px auto;
+    }
+    .confirmation-box .confirm-icon {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
+    .confirmation-box .confirm-icon svg {
+      width: 34px;
+      height: 34px;
+      display: block;
+    }
+    .confirmation-box .confirm-text {
+      font-size: 26px; font-weight: 400; color: #ffffff;
+      line-height: 1.3;
+    }
+    #ruminacao .rum-cta-text {
+      font-size: 26px; font-weight: 400; color: var(--text-gray);
+      text-align: center; max-width: 40%; margin: 24px auto 0;
+      line-height: 1.4;
+    }
+    #ruminacao .rum-bridge {
+      text-align: center; max-width: 70%;
+      margin: 8px auto 0;
+    }
+    #ruminacao .rum-cta-text b { font-weight: 400; }
+
+    /* ============================================================
+       BLOCO 4 — PASSO A PASSO
+       ============================================================ */
+    #passos { background: var(--dark); padding: 50px 20px; }
+    #passos .passos-title {
+      font-size: var(--fs-heading-xl);
+      font-weight: 700;
+      color: var(--white) !important;
+      text-align: center;
+      line-height: var(--lh-tight);
+      max-width: 42%;
+      margin: 0 auto 40px;
+      font-family: 'Nunito', sans-serif;
+    }
+    #passos .passos-title b { font-weight: 400; color: var(--white) !important; }
+    .step-card {
+      background: var(--gray-bg);
+      border-radius: 24px;
+      padding: 32px;
+      display: block;
+      max-width: 1040px;
+      margin: 0 auto 16px;
+    }
+    .step-card .step-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 42%);
+      align-items: center;
+      column-gap: 28px;
+      text-align: left;
+    }
+    .step-card .step-label {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: var(--fs-heading-xl);
+      font-weight: 700;
+      line-height: var(--lh-tight);
+      letter-spacing: -0.5px;
+      color: var(--dark) !important;
+      margin-bottom: 8px;
+      grid-column: 1;
+    }
+    .step-card .step-title {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: var(--fs-heading-xl);
+      font-weight: 700;
+      line-height: var(--lh-tight);
+      letter-spacing: -0.5px;
+      color: var(--dark) !important;
+      margin-bottom: 14px;
+      grid-column: 1;
+    }
+    .step-card .step-desc {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: var(--fs-body-lg);
+      font-weight: 400;
+      color: var(--dark);
+      margin: 0;
+      line-height: var(--lh-body);
+      max-width: 100%;
+      grid-column: 1;
+    }
+    .step-card .step-image {
+      background: #f4f4f4;
+      border-radius: 16px;
+      margin-top: 0;
+      min-height: 330px;
+      overflow: hidden;
+      grid-column: 2;
+      grid-row: 1 / span 3;
+    }
+    .step-card .step-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 330px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ============================================================
+       BLOCO EXTRA — BENEFÍCIOS
+       ============================================================ */
+    #beneficios { background: var(--white); padding: 50px 20px; }
+    #beneficios .ben-title {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; max-width: 56%; margin: 0 auto 32px;
+    }
+    .benefit-item {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 680px;
+      margin: 0 auto 12px;
+    }
+    .benefit-item .ben-check {
+      font-size: 24px; flex-shrink: 0;
+    }
+    .benefit-item .ben-text {
+      font-size: 24px; font-weight: 400; color: var(--text-gray);
+    }
+
+    /* ============================================================
+       BLOCO 5 — ENTREGÁVEIS
+       ============================================================ */
+    #entregaveis { background: var(--dark); padding: 30px 20px; }
+    #entregaveis .ent-pre {
+      font-size: 32px; font-weight: 400; color: #ffffff;
+      text-align: center; margin-bottom: 12px;
+    }
+    #entregaveis .ent-title {
+      font-size: 32px; font-weight: 400; color: #ffffff;
+      text-align: center; max-width: 46%; margin: 0 auto 0;
+      line-height: 1.4;
+    }
+    #entregaveis .ent-title b { font-weight: 400; }
+    .ent-list { background: var(--gray-bg); padding: 50px 20px; }
+    .ent-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 32px;
+      display: block;
+      max-width: 1040px;
+      margin: 0 auto 16px;
+    }
+    .ent-card .ent-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 42%);
+      align-items: center;
+      column-gap: 28px;
+      text-align: left;
+    }
+    .ent-card .ent-info { grid-column: 1; }
+    .ent-card .ent-name {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: var(--fs-heading-xl);
+      font-weight: 700;
+      color: var(--dark) !important;
+      line-height: var(--lh-tight);
+      letter-spacing: -0.5px;
+      text-align: left;
+    }
+    .ent-card .ent-desc {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: var(--fs-body-lg);
+      font-weight: 400;
+      color: var(--dark);
+      margin-top: 12px;
+      line-height: var(--lh-body);
+      text-align: left;
+    }
+    .ent-card .ent-mockup {
+      margin-top: 0;
+      min-height: 330px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #d5d5d7;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .ent-card .ent-mockup img {
+      width: 100%;
+      height: 100%;
+      min-height: 330px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ============================================================
+       BLOCO 6 — BÔNUS
+       ============================================================ */
+    #bonus { background: var(--white); padding: 50px 20px; }
+    #bonus .bonus-pre {
+      font-size: 32px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; margin-bottom: 8px;
+    }
+    #bonus .bonus-title {
+      font-size: 32px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 56%; margin: 0 auto 32px;
+    }
+    .bonus-card {
+      background: var(--gray-bg);
+      border-radius: 24px;
+      padding: 32px;
+      display: block;
+      max-width: 1040px;
+      margin: 0 auto 16px;
+    }
+    .bonus-card .bonus-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 42%);
+      align-items: center;
+      column-gap: 28px;
+      text-align: left;
+    }
+    .bonus-card .bonus-img {
+      width: 100%;
+      margin-top: 0;
+      min-height: 240px;
+      border-radius: 16px;
+      object-fit: cover;
+      display: block;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .bonus-card .bonus-info { grid-column: 1; text-align: left; }
+    .bonus-card .bonus-name {
+      font-family: 'Nunito', sans-serif !important;
+      font-size: var(--fs-heading-xl);
+      font-weight: 700;
+      color: var(--dark) !important;
+      line-height: var(--lh-tight);
+      letter-spacing: -0.5px;
+      text-align: left;
+    }
+    .bonus-card .bonus-desc {
+      font-family: 'Overpass', sans-serif !important;
+      font-size: var(--fs-body-lg) !important;
+      font-weight: 400 !important;
+      color: var(--dark) !important;
+      margin-top: 12px;
+      line-height: var(--lh-body);
+      text-align: left;
+    }
+
+    /* ============================================================
+       BLOCO 7 — PARA QUEM SERVE
+       ============================================================ */
+    #paraquem { background: var(--dark); padding: 50px 20px; }
+    #paraquem .pq-title {
+      font-size: 32px; font-weight: 400; color: var(--white) !important;
+      text-align: center; max-width: 40%; margin: 0 auto 32px;
+    }
+    .paraquem-list {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 900px;
+      margin: 0 auto 32px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .paraquem-list .pq-list-items {
+      min-width: 0;
+    }
+    .paraquem-list .pq-item {
+      font-size: 18px; color: var(--text-dark);
+      padding: 10px 0;
+      border-bottom: 1px solid #d0d0d0;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .paraquem-list .pq-item span {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      letter-spacing: 0 !important;
+    }
+    .paraquem-list .pq-item:last-child { border-bottom: none; }
+    .paraquem-list .pq-item .pq-check { color: var(--green); font-size: 18px; flex-shrink: 0; }
+    #paraquem .pq-image-placeholder {
+      background: #f2f2f2;
+      border-radius: 12px;
+      min-height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px;
+      color: var(--text-gray);
+    }
+    #paraquem .pq-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    #paraquem .pq-enfim {
+      font-size: 32px; font-weight: 400; color: #ffffff;
+      text-align: center; margin-bottom: 12px;
+    }
+    #paraquem .pq-desejo {
+      font-size: 32px; font-weight: 400; color: #ffffff;
+      text-align: center; max-width: 58%; margin: 0 auto;
+      line-height: 1.4;
+    }
+    #paraquem .pq-desejo b { font-weight: 400; }
+
+    /* ============================================================
+       BLOCO 8 — RECAPITULANDO
+       ============================================================ */
+    #recapitulando { background: var(--white); padding: 50px 20px; }
+    #recapitulando .recap-pre {
+      font-size: 32px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; margin-bottom: 8px;
+    }
+    #recapitulando .recap-title {
+      font-size: 32px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 46%; margin: 0 auto 32px;
+    }
+    .recap-stack {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+    .recap-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px solid #d5d5d5;
+    }
+    .recap-row:last-child { border-bottom: none; }
+    .recap-row .recap-name {
+      font-size: 18px; color: var(--text-dark);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .recap-row .recap-name .check { color: var(--green); }
+    .recap-row .recap-dash {
+      font-size: 18px;
+      color: var(--text-gray);
+      letter-spacing: 0 !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: clip;
+      flex: 1;
+      min-width: 0;
+    }
+    .recap-row .recap-val {
+      font-size: 18px; font-weight: 400; color: var(--text-gray);
+      white-space: nowrap;
+    }
+    #recapitulando .recap-deveria {
+      font-size: 20px !important; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 48%; margin: 0 auto 16px;
+    }
+    #recapitulando .recap-deveria b { font-weight: 400; color: var(--dark) !important; }
+    #recapitulando .recap-mas {
+      font-size: 20px !important; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 48%; margin: 0 auto;
+      line-height: 1.4;
+    }
+    #recapitulando .recap-mas b { font-weight: 400; color: var(--dark) !important; }
+
+    /* ============================================================
+       BLOCO 9/13 — BLOCO DE VALOR (Preço)
+       ============================================================ */
+    .price-section { background: var(--dark); padding: 50px 20px; }
+    .price-card {
+      background: var(--gray-bg);
+      border-radius: 20px;
+      padding: 36px 28px;
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(360px, 1.15fr) minmax(320px, 0.85fr);
+      align-items: center;
+      gap: 34px;
+    }
+    .price-card .price-mockup {
+      width: 100%;
+      max-width: 560px;
+      height: 100%;
+      min-height: 460px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 0;
+      background: #d5d5d7;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+    .price-card .price-product {
+      font-size: 26px !important;
+      color: var(--dark) !important;
+      margin-bottom: 6px;
+      text-align: center;
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .price-card .price-right {
+      grid-column: 2;
+      grid-row: 2;
+      text-align: center;
+    }
+    .price-card .price-logo {
+      width: 190px;
+      max-width: 72%;
+      margin: 0 auto 12px;
+      display: block;
+    }
+    .price-card .price-strike {
+      font-size: 20px !important;
+      color: var(--dark) !important;
+      text-decoration: line-through;
+      margin-bottom: 10px;
+    }
+    .price-card .price-label {
+      font-size: 20px !important; font-weight: 400; color: var(--dark) !important;
+      margin-bottom: 8px;
+    }
+    .price-card .price-installments {
+      font-size: 74px !important; font-weight: 400; color: var(--green) !important;
+      line-height: 1; margin-bottom: 12px;
+    }
+    .price-card .price-cash {
+      font-size: 20px !important; font-weight: 400; color: var(--dark) !important;
+      margin-bottom: 18px;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--green);
+      color: #ffffff;
+      font-family: 'Overpass', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-cta:hover { opacity: 0.88; }
+    .price-card .btn-cta {
+      display: inline-block;
+      background: var(--green);
+      color: #ffffff;
+      font-family: 'Overpass', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      padding: 16px 32px;
+      border-radius: 0;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      width: auto;
+      min-width: 320px;
+      transition: opacity 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .price-card .btn-cta:hover { opacity: 0.88; }
+    .price-card .price-badges {
+      margin-top: 14px;
+      width: 80%; max-width: 360px;
+      margin-left: auto; margin-right: auto;
+    }
+    .price-card .price-safe {
+      font-size: 18px !important;
+      color: var(--dark) !important;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       BLOCO 10 — COMO ACESSAR
+       ============================================================ */
+    #comoacessar { background: var(--gray-bg); padding: 50px 20px; }
+    #comoacessar .ca-title {
+      font-size: 24px !important;
+      font-weight: 700 !important;
+      color: var(--dark) !important;
+      letter-spacing: -1px !important;
+      line-height: 1.3 !important;
+      text-align: center; max-width: 50%; margin: 0 auto 40px;
+    }
+    #comoacessar .access-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #comoacessar .access-step {
+      background: var(--white);
+      border-radius: 18px;
+      border: 1px solid rgba(48, 48, 48, 0.1);
+      padding: 24px 18px 22px;
+      min-width: 0;
+      max-width: none;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+    #comoacessar .access-step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #2dc270 0%, #14a353 100%);
+    }
+    #comoacessar .access-step .as-num {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #23d16f 0%, #12a84f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(17, 153, 77, 0.24);
+    }
+    #comoacessar .access-step .as-num-icon {
+      width: 22px;
+      height: 22px;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #comoacessar .access-step .as-num-icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #comoacessar .access-step .as-title {
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      color: var(--dark) !important;
+      letter-spacing: 0 !important;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    #comoacessar .access-step .as-desc {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      color: var(--text-gray) !important;
+      letter-spacing: 0 !important;
+      line-height: 1.45 !important;
+    }
+
+    /* ============================================================
+       BLOCO 11 — AUTORIDADE
+       ============================================================ */
+    #autoridade { background: #3f3b42; padding: 70px 20px; }
+    #autoridade .auth-card {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 36px;
+    }
+    #autoridade .auth-info { text-align: left; }
+    #autoridade .auth-heading {
+      font-size: 52px !important;
+      font-weight: 400 !important;
+      color: var(--white) !important;
+      line-height: 1.25 !important;
+      margin-bottom: 26px;
+      letter-spacing: -1px !important;
+    }
+    #autoridade .auth-heading b {
+      color: var(--white) !important;
+      font-weight: 700 !important;
+    }
+    #autoridade .auth-bio {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 400 !important;
+      color: #f1f1f1 !important;
+      line-height: 1.6 !important;
+      letter-spacing: 0 !important;
+      white-space: pre-line;
+    }
+    #autoridade .auth-photo {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 50%;
+      display: block;
+      margin-left: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    /* ============================================================
+       BLOCO 12 — CONVERSA SÉRIA (Duas Opções)
+       ============================================================ */
+    #conversa { background: var(--white); padding: 50px 20px; }
+    #conversa .conv-title {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; max-width: 46%; margin: 0 auto 32px;
+    }
+    .options-row {
+      display: flex;
+      gap: 20px;
+      max-width: 760px;
+      margin: 0 auto 32px;
+    }
+    .option-box {
+      flex: 1;
+      border-radius: 12px;
+      padding: 40px;
+    }
+    .option-box.opt1 { background: var(--opt1-bg); }
+    .option-box.opt2 { background: var(--opt2-bg); }
+    .option-box .opt-icon { font-size: 32px; margin-bottom: 12px; }
+    .option-box .opt-label {
+      font-size: 24px; font-weight: 400; margin-bottom: 16px;
+    }
+    .option-box.opt1 .opt-label { color: var(--opt1-text); }
+    .option-box.opt2 .opt-label { color: var(--opt2-text); }
+    .option-box .opt-list { list-style: none; }
+    .option-box .opt-list li {
+      font-size: 18px; color: var(--text-dark);
+      padding: 6px 0;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .option-box .opt-list li .opt-bullet { flex-shrink: 0; font-size: 16px; }
+    .option-box .opt-single-text {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 400 !important;
+      line-height: 1.4 !important;
+      letter-spacing: 0 !important;
+      color: var(--text-gray) !important;
+      margin-top: 12px;
+      text-align: left;
+    }
+    #conversa .conv-conclusion {
+      font-size: 26px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 70%; margin: 0 auto 16px;
+    }
+    #conversa .conv-cta-text {
+      font-size: 26px; font-weight: 400; color: var(--dark) !important;
+      text-align: center; max-width: 52%; margin: 0 auto 32px;
+    }
+    #conversa .conv-mockups-placeholder {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      max-width: 680px;
+      min-height: 420px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--text-gray);
+    }
+    #conversa .conv-mockups-placeholder img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+    #conversa .conv-cta-text b { font-weight: 400; }
+    #conversa .btn-wrapper { text-align: center; }
+
+    /* ============================================================
+       BLOCO 14 — FAQ
+       ============================================================ */
+    #faq { background: var(--gray-bg); padding: 50px 20px; }
+    #faq .faq-title {
+      font-size: 32px; font-weight: 400; color: var(--text-gray);
+      text-align: center; max-width: 46%; margin: 0 auto 40px;
+    }
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid #d0d0d0;
+    }
+    .faq-item:first-child { border-top: 1px solid #d0d0d0; }
+    .faq-question {
+      width: 100%;
+      background: none; border: none;
+      font-family: 'Overpass', sans-serif;
+      font-size: 18px; font-weight: 400; color: var(--text-gray);
+      text-align: left;
+      padding: 20px 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-question .faq-arrow {
+      transition: transform 0.25s;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+    .faq-question[aria-expanded="true"] .faq-arrow {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      display: none;
+      font-size: 16px; color: var(--text-gray);
+      line-height: 1.6; padding-bottom: 20px;
+    }
+    .faq-answer.open { display: block; }
+
+    /* ============================================================
+       BLOCO 15 — RODAPÉ
+       ============================================================ */
+    #rodape {
+      background: var(--dark);
+      padding: 20px;
+      text-align: center;
+    }
+    #rodape .rodape-text {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: var(--white) !important;
+      line-height: 1.6 !important;
+      letter-spacing: 0 !important;
+      max-width: 600px; margin: 0 auto 8px;
+    }
+    #rodape .rodape-copy {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: var(--white) !important;
+      line-height: 1.6 !important;
+      letter-spacing: 0 !important;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       RESPONSIVO — Mobile First
+       ============================================================ */
+    @media (max-width: 768px) {
+      .h-hero        { font-size: 24px; max-width: 100%; }
+      .h-section     { font-size: 24px; }
+      .h-sub         { font-size: 22px; }
+      .h-step-label,
+      .h-step-title  { font-size: 22px; }
+
+      #hero .hero-logo       { width: 40%; }
+      #hero .hero-mockup     { width: 100%; }
+      #hero .hero-before-after { width: 100%; }
+      #hero .hero-before-after-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 100%; }
+      #hero .hero-ba-arrow { display: block; width: clamp(56px, 12vw, 92px); }
+      #hero .hero-ba-img {
+        aspect-ratio: 9 / 16;
+        min-height: 190px;
+        max-height: none;
+      }
+
+      #depoimentos .dep-title { max-width: 100%; }
+      .dep-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 640px; }
+
+      #ruminacao .rum-headline { max-width: 100%; }
+      #ruminacao .rum-thoughts-img { width: 100%; }
+      #ruminacao .rum-thoughts-board { width: min(100%, 94vw); }
+      #ruminacao .rum-stage {
+        width: min(94vw, 352px);
+        min-height: 612px;
+        --rum-phone-w: min(67vw, 232px);
+        --rum-bubble-w: 120px;
+        --rum-left-overlap: 0.66;
+        --rum-right-overlap: 0.38;
+      }
+      #ruminacao .rum-board-phone {
+        top: 74px;
+      }
+      #ruminacao .rum-thought {
+        min-width: 0;
+        padding: 10px 9px;
+        border-radius: 12px;
+      }
+      #ruminacao .rum-thought.tl { left: calc(50% - (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-left-overlap))); top: 170px; }
+      #ruminacao .rum-thought.tr { left: calc(50% + (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-right-overlap))); right: auto; top: 50px; }
+      #ruminacao .rum-thought.bl { left: calc(50% - (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * 0.56)); top: 470px; bottom: auto; }
+      #ruminacao .rum-thought.br { left: calc(50% + (var(--rum-phone-w) / 2) - (var(--rum-bubble-w) * var(--rum-right-overlap))); right: auto; top: 344px; }
+      #ruminacao .rum-thought-text { font-size: 12px !important; line-height: 1.24 !important; }
+      #ruminacao .rum-cta-text { max-width: 100%; }
+      #ruminacao .rum-bridge { max-width: 100%; }
+
+      #passos .passos-title { max-width: 100%; }
+      .step-card { padding: 24px 18px; border-radius: 20px; }
+      .step-card .step-content {
+        display: block;
+        text-align: center;
+      }
+      .step-card .step-label,
+      .step-card .step-title {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: var(--lh-tight);
+        letter-spacing: -1px;
+      }
+      .step-card .step-desc {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: var(--lh-body);
+      }
+      .step-card .step-image { margin-top: 18px; min-height: 240px; }
+      .step-card .step-image img { min-height: 240px; }
+
+      #beneficios .ben-title { max-width: 100%; }
+      .benefit-item { flex-direction: column; text-align: center; }
+
+      #entregaveis .ent-title { max-width: 100%; }
+      .ent-card { border-radius: 20px; padding: 24px 18px; }
+      .ent-card .ent-content {
+        display: block;
+        text-align: center;
+      }
+      .ent-card .ent-info { grid-column: auto; }
+      .ent-card .ent-name {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: var(--lh-tight);
+        letter-spacing: -1px;
+        text-align: center;
+      }
+      .ent-card .ent-desc {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: var(--lh-body);
+        text-align: center;
+      }
+      .ent-card .ent-mockup { margin-top: 18px; }
+      .ent-card .ent-mockup { min-height: 240px; }
+      .ent-card .ent-mockup img { min-height: 240px; }
+
+      .bonus-card { border-radius: 20px; padding: 24px 18px; }
+      .bonus-card .bonus-content {
+        display: block;
+        text-align: center;
+      }
+      .bonus-card .bonus-info { grid-column: auto; text-align: center; }
+      .bonus-card .bonus-name {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: var(--lh-tight);
+        letter-spacing: -1px;
+        text-align: center;
+      }
+      .bonus-card .bonus-desc {
+        font-size: 18px !important;
+        font-weight: 400 !important;
+        line-height: var(--lh-body);
+        text-align: center;
+      }
+      .bonus-card .bonus-img { margin-top: 18px; }
+      .bonus-card .bonus-img { min-height: 200px; }
+
+      #paraquem .pq-title { max-width: 100%; }
+      #paraquem .pq-desejo { max-width: 100%; }
+      .paraquem-list { grid-template-columns: 1fr; max-width: 680px; }
+      #paraquem .pq-image-placeholder { min-height: 320px; }
+      #paraquem .pq-image-placeholder img { min-height: 320px; }
+
+      #recapitulando .recap-title { max-width: 100%; }
+      #recapitulando .recap-deveria,
+      #recapitulando .recap-mas { max-width: 100%; }
+
+      .price-card { padding: 28px 16px; }
+      .price-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .price-card .price-mockup {
+        width: 100%;
+        max-width: 520px;
+        height: 240px;
+        min-height: 240px;
+        margin: 0 auto;
+        grid-column: auto;
+        grid-row: auto;
+      }
+      .price-card .price-product {
+        grid-column: auto;
+        grid-row: auto;
+      }
+      .price-card .price-right {
+        grid-column: auto;
+        grid-row: auto;
+      }
+      .price-card .price-logo { width: 160px; }
+      .price-card .price-label { font-size: 20px !important; }
+      .price-card .price-installments { font-size: 56px !important; }
+      .price-card .price-cash { font-size: 20px !important; }
+      .price-card .btn-cta {
+        width: 100%;
+        max-width: 320px;
+        min-width: 0;
+        font-size: 16px;
+      }
+
+      #comoacessar .ca-title { max-width: 100%; }
+      #comoacessar .access-steps { grid-template-columns: 1fr; }
+      #comoacessar .access-step { max-width: 100%; width: 100%; }
+
+      #autoridade .auth-card { grid-template-columns: 1fr; }
+      #autoridade .auth-info { text-align: center; }
+      #autoridade .auth-heading { font-size: 36px !important; }
+      #autoridade .auth-photo { margin: 0 auto; max-width: 300px; }
+
+      #conversa .conv-title { max-width: 100%; }
+      .options-row { flex-direction: column; }
+      #conversa .conv-conclusion,
+      #conversa .conv-cta-text { max-width: 100%; }
+      #conversa .conv-mockups-placeholder { min-height: 320px; }
+      #conversa .conv-mockups-placeholder img { min-height: 320px; }
+
+      #faq .faq-title { max-width: 100%; }
+
+      .inner, .inner-narrow, .inner-wide { padding: 0 20px; }
+
+      .section-wrapper { padding: 30px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .dep-grid { grid-template-columns: 1fr; }
+      .h-hero, .h-section, #passos .passos-title, #bonus .bonus-title, #recapitulando .recap-title {
+        font-size: 22px;
+      }
+      .recap-row {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 6px;
+      }
+      .recap-row .recap-name,
+      .recap-row .recap-val {
+        font-size: 16px;
+      }
+      .recap-row .recap-dash {
+        min-width: 0;
+      }
+      .price-card .price-installments { font-size: 48px !important; }
+      .price-card .price-cash { font-size: 18px !important; }
+      .price-card .btn-cta { width: 100%; min-width: 0; font-size: 15px; padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ============================================================
+       TEMPLATE VARIABLES (chaves dinâmicas)
+       Use este bloco como referência única para preencher o template.
+
+       Identidade e oferta:
+       {{NOME_PRODUTO}} nome do produto, {{META_DESCRICAO}} meta description,
+       {{NOME_AUTOR}} autor, {{BIO_AUTOR}} bio, {{CHECKOUT_URL}} link de compra,
+       {{TEXTO_CTA}} texto do botão, {{SELOS_URL}} imagem de selos.
+
+       Hero e prova:
+       {{PROMESSA_PRINCIPAL}}, {{TEMPO_ESPECIFICO}}, {{OBJECAO}},
+       {{SITUACAO_INICIAL}}, {{RESULTADO_POSITIVO}},
+       {{HERO_ANTES_IMG}}, {{HERO_DEPOIS_IMG}},
+       {{DEP_COPY_1}}..{{DEP_COPY_6}}, {{DEP_IMG_1}}..{{DEP_IMG_6}}.
+
+       Dor e mecanismo:
+       {{DOR_COTIDIANA}}, {{RESULTADO_FRUSTRANTE}},
+       {{PASSO1}}, {{PASSO1_DESC}}, {{PASSO2}}, {{PASSO2_DESC}}, {{PASSO3}}, {{PASSO3_DESC}},
+       {{RESULTADO_PRINCIPAL}},
+       {{RUMINACAO_IMG}}, {{RUMINACAO_1}}, {{RUMINACAO_2}}, {{RUMINACAO_3}}, {{RUMINACAO_4}}.
+
+       Benefícios e qualificação:
+       {{BENEFICIO_1}}, {{BENEFICIO_2}}, {{BENEFICIO_3}}, {{BENEFICIO_4}},
+       {{DESEJO_PERSONA}}.
+
+       Preço e recap:
+       {{TOTAL_VALOR}}, {{QTDE_PARCELAS}}, {{PRECO_PARCELADO}}, {{PRECO_VISTA}}.
+
+       FAQ:
+       {{FAQ_Q1}}..{{FAQ_Q5}}, {{FAQ_A1}}..{{FAQ_A5}}.
+
+       Placeholders de copy (preencher conforme contexto):
+       {{resultado/benefício principal}}, {{objeção maior}},
+       {{Desejo ou objetivo que a persona tem}}, {{Dor ou frustração que a persona enfrenta}},
+       {{Limitação comum que atrapalha}}, {{Erro ou perda de dinheiro que costuma acontecer}},
+       {{Promessa clara de benefício desejado}}, {{Segmento de pessoas que se encaixa no produto}},
+       {{dor da persona}}, {{NOME DO PRODUTO}},
+       {{NOME DO SEU PRODUTO}}, {{Promessa Principal}}, {{RESULTADO}},
+       {{ação principal}}, {{explicação curta do que isso significa}},
+       {{transformacao_beneficio_principal}}, {{caracteristica_exercicios}},
+       {{tempo_aplicacao}},
+       {{beneficio_principal_transformacao}}, {{objecao_comum}},
+       {{alcançar resultado esperado}}, {{número de erros}}, {{situação/dor da persona}},
+       {{Transformação}}, {{tipo de conteúdo: dicas práticas, estratégias simples, exercícios rápidos}},
+       {{transformação desejada}}, {{dor ou situação negativa que a persona quer evitar}},
+       {{benefício principal}}, {{benefício/resultado principal}},
+       {{promessa principal}}, {{transformação/resultado principal}}, {{objeção/dificuldade comum}},
+       {{Nome do Autor/Empresa}}, {{Nome da Marca/Negócio}}, {{Ano}}.
+       ============================================================ -->
+
+  <!-- ============================================================
+       BLOCO 1 — HERO: VENDER SOZINHO
+       Função: Primeira impressão. Headline com promessa + prova visual.
+       Psicologia: "Descoberta" — apresenta a transformação desejada antes de qualquer objeção.
+       Variáveis: NOME_PRODUTO, PROMESSA_PRINCIPAL, TEMPO_ESPECIFICO, OBJECAO, MOCKUP_URL, LOGO_URL
+       ============================================================ -->
+  <section id="hero">
+    <div>
+      <!-- Logo / Badge do produto -->
+      <img class="hero-logo" src="bloc-0-logo-produto.png" alt="{{NOME_PRODUTO}}" />
+
+      <!-- Headline principal -->
+      <h2 class="h-hero">
+        Descubra como <b>{{PROMESSA_PRINCIPAL}}</b> em <b>{{TEMPO_ESPECIFICO}}</b>, mesmo que <b>{{OBJECAO}}</b>.
+      </h2>
+
+      <!-- Antes/Depois em HTML (controlado por CSS do template) -->
+      <div class="hero-before-after-grid">
+        <svg class="hero-ba-arrow" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M10 34c18-22 56-26 82-8" fill="none" stroke="#11b55a" stroke-width="10" stroke-linecap="round"/>
+          <path d="M75 10l30 18-34 4" fill="none" stroke="#11b55a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="hero-ba-card">
+          <div class="hero-ba-pill before">
+            <span class="hero-ba-pill-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4l8 8M12 4L4 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <p class="hero-ba-label">antes</p>
+          </div>
+          <img class="hero-ba-img" src="{{HERO_ANTES_IMG}}" alt="Antes de usar {{NOME_PRODUTO}}" />
+        </div>
+        <div class="hero-ba-card">
+          <div class="hero-ba-pill after">
+            <span class="hero-ba-pill-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.5 8.5l2.6 2.6 6.4-6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p class="hero-ba-label">depois</p>
+          </div>
+          <img class="hero-ba-img" src="{{HERO_DEPOIS_IMG}}" alt="Depois de usar {{NOME_PRODUTO}}" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 2 — DEPOIMENTOS (Prova Social Antes do Produto)
+       Função: Ancoragem de credibilidade ANTES de explicar o produto.
+       Psicologia: Prova social — "outros como você já obtiveram resultado".
+       Variáveis: SITUACAO_INICIAL, NOME_PRODUTO, RESULTADO_POSITIVO, DEP_IMG_1..6
+       ============================================================ -->
+  <section id="depoimentos">
+    <h2 class="dep-title">
+      Veja o antes e depois de pessoas que <b>{{SITUACAO_INICIAL}}</b> e que, após <b>{{NOME_PRODUTO}}</b>, conseguiram <b>{{RESULTADO_POSITIVO}}</b>
+    </h2>
+
+    <div class="dep-grid">
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_1}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_1}}" alt="Depoimento 1" />
+          </div>
+        </div>
+      </article>
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_2}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_2}}" alt="Depoimento 2" />
+          </div>
+        </div>
+      </article>
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_3}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_3}}" alt="Depoimento 3" />
+          </div>
+        </div>
+      </article>
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_4}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_4}}" alt="Depoimento 4" />
+          </div>
+        </div>
+      </article>
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_5}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_5}}" alt="Depoimento 5" />
+          </div>
+        </div>
+      </article>
+      <article class="dep-item">
+        <div class="dep-card">
+          <div class="dep-pill">
+            <span class="dep-pill-label">{{DEP_COPY_6}}</span>
+          </div>
+          <div class="dep-media">
+            <img src="{{DEP_IMG_6}}" alt="Depoimento 6" />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 3 — RUMINAÇÃO (Agitação da Dor)
+       Função: Espelho emocional. Leitor se identifica com os pensamentos.
+       Psicologia: Empatia + agitação → leitor diz "sim, é exatamente isso".
+       Variáveis: DOR_COTIDIANA, RESULTADO_FRUSTRANTE, NOME_PRODUTO, PENSAMENTOS_IMG_URL, FOTO_AUTOR_URL
+       ============================================================ -->
+  <section id="ruminacao">
+    <!-- Headline de dor -->
+    <h2 class="rum-headline">
+      Você não aguenta mais <b>{{DOR_COTIDIANA}}</b> e ver sempre <b>{{RESULTADO_FRUSTRANTE}}</b>.
+    </h2>
+
+    <p class="rum-sub">Por isso, você pensa:</p>
+
+    <!-- Estrutura de ruminação em HTML: quadro central + balões -->
+    <div class="rum-thoughts-board">
+      <div class="rum-stage">
+        <div class="rum-thought tl">
+          <p class="rum-thought-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</p>
+        </div>
+        <div class="rum-thought tr">
+          <p class="rum-thought-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</p>
+        </div>
+        <div class="rum-board-phone">
+          <img src="{{RUMINACAO_IMG}}" alt="Pensamentos" />
+        </div>
+        <div class="rum-thought bl">
+          <p class="rum-thought-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</p>
+        </div>
+        <div class="rum-thought br">
+          <p class="rum-thought-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="rum-eusei">Eu sei…</p>
+
+    <!-- Caixa de confirmação — engaja o leitor com pergunta direta -->
+    <div class="confirmation-box">
+      <span class="confirm-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3L2.5 20h19L12 3z" fill="#FFD24D"/>
+          <rect x="11" y="8.2" width="2" height="7.2" rx="1" fill="#7A2A00"/>
+          <circle cx="12" cy="17.8" r="1.2" fill="#7A2A00"/>
+        </svg>
+      </span>
+      <p class="confirm-text">Estou certo?</p>
+    </div>
+
+    <p class="rum-bridge">
+      Se você pudesse ter {{resultado/benefício principal}}, sem {{objeção maior}},
+    </p>
+
+    <p class="rum-cta-text">
+      Se a sua resposta for "SIM", o <b>{{NOME_PRODUTO}}</b> é para você.
+    </p>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 4 — PASSO A PASSO (Mecanismo Único)
+       Função: Desmistifica a solução. Torna o caminho simples e concreto.
+       Psicologia: Competência percebida — "eu consigo fazer isso".
+       Variáveis: RESULTADO_PRINCIPAL, PASSO1, PASSO2, PASSO3
+       ============================================================ -->
+  <section id="passos">
+    <h2 class="passos-title">
+      Esses são os 3 passos para <b>{{RESULTADO_PRINCIPAL}}</b>
+    </h2>
+
+    <div class="step-card">
+      <div class="step-content">
+        <p class="step-label">Passo 1:</p>
+        <p class="step-title">{{PASSO1}}</p>
+        <p class="step-desc">{{PASSO1_DESC}}</p>
+        <div class="step-image">
+          <img src="bloc-4-passo.png" alt="{{PASSO1}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-content">
+        <p class="step-label">Passo 2:</p>
+        <p class="step-title">{{PASSO2}}</p>
+        <p class="step-desc">{{PASSO2_DESC}}</p>
+        <div class="step-image">
+          <img src="bloc-4-passo.png" alt="{{PASSO2}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-content">
+        <p class="step-label">Passo 3:</p>
+        <p class="step-title">{{PASSO3}}</p>
+        <p class="step-desc">{{PASSO3_DESC}}</p>
+        <div class="step-image">
+          <img src="bloc-4-passo.png" alt="{{PASSO3}}" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO EXTRA — BENEFÍCIOS (O Que Você Vai Conquistar)
+       Função: Ancoragem de valor por transformação, não por features.
+       Psicologia: Desejo — visualiza o estado futuro desejado.
+       Variáveis: BENEFICIO_1..N (4 a 6 benefícios)
+       ============================================================ -->
+  <section id="beneficios">
+    <h2 class="ben-title">Com esse passo a passo você vai:</h2>
+
+    <div class="benefit-item">
+      <span class="ben-check">✅</span>
+      <span class="ben-text">{{BENEFICIO_1}}</span>
+    </div>
+    <div class="benefit-item">
+      <span class="ben-check">✅</span>
+      <span class="ben-text">{{BENEFICIO_2}}</span>
+    </div>
+    <div class="benefit-item">
+      <span class="ben-check">✅</span>
+      <span class="ben-text">{{BENEFICIO_3}}</span>
+    </div>
+    <div class="benefit-item">
+      <span class="ben-check">✅</span>
+      <span class="ben-text">{{BENEFICIO_4}}</span>
+    </div>
+    <!-- Adicione mais se necessário -->
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 5 — ENTREGÁVEIS (O Que Está Incluído)
+       Função: Detalha cada item do produto. Justifica o preço.
+       Psicologia: Percepção de valor — cada entregável resolve uma dor específica.
+       Variáveis: NOME_PRODUTO, ENT1_NOME, ENT1_DESC, ENT1_IMG, ENT2..N
+       Alternância: row / row-reverse para variar o layout visualmente
+       ============================================================ -->
+  <section id="entregaveis">
+    <div class="ent-pre">E tem mais!</div>
+    <div class="ent-title">
+      Veja tudo que você vai receber com o {{NOME DO SEU PRODUTO}}
+    </div>
+  </section>
+
+  <div class="ent-list">
+    <div class="ent-card">
+      <div class="ent-content">
+        <div class="ent-info">
+          <p class="ent-name">CHECKLIST ={{Promessa Principal}}</p>
+          <p class="ent-desc">
+            Você terá em mãos um checklist de {{tipo de ações: rápidas, simples, práticas}} que tornará impossível você não {{resultado desejado principal}} em {{tempo específico}}.
+          </p>
+        </div>
+        <div class="ent-mockup">
+          <img src="bloc-5-6-mockup-produto-entregue.png" alt="Mockup checklist" />
+        </div>
+      </div>
+    </div>
+
+    <div class="ent-card">
+      <div class="ent-content">
+        <div class="ent-info">
+          <p class="ent-name">Template de Exercícios Práticos para {{RESULTADO}}</p>
+          <p class="ent-desc">
+            Um passo a passo para você {{ação principal}}, ou seja, {{explicação curta do que isso significa}}. Você vai saber exatamente como {{transformação/benefício principal}}.
+          </p>
+        </div>
+        <div class="ent-mockup">
+          <img src="bloc-5-6-mockup-produto-entregue.png" alt="Mockup template de exercícios" />
+        </div>
+      </div>
+    </div>
+
+    <div class="ent-card">
+      <div class="ent-content">
+        <div class="ent-info">
+          <p class="ent-name">GUIA DE AÇÕES PARA {{RESULTADO}}</p>
+          <p class="ent-desc">
+            Guia completo com exercícios {{caracteristica_exercicios}}, para você aplicar {{tempo_aplicacao}} e {{beneficio_principal_transformacao}}, sem que você precise {{objecao_comum}}.
+          </p>
+        </div>
+        <div class="ent-mockup">
+          <img src="bloc-5-6-mockup-produto-entregue.png" alt="Mockup guia de ações" />
+        </div>
+      </div>
+    </div>
+
+    <div class="ent-card">
+      <div class="ent-content">
+        <div class="ent-info">
+          <p class="ent-name">Lista de Erros te impedem de {{alcançar resultado esperado}}</p>
+          <p class="ent-desc">
+            Você vai receber uma lista com os {{número de erros}} erros mais comuns que acontecem quando {{situação/dor da persona}}.
+          </p>
+        </div>
+        <div class="ent-mockup">
+          <img src="bloc-5-6-mockup-produto-entregue.png" alt="Mockup lista de erros" />
+        </div>
+      </div>
+    </div>
+    <!-- Adicione mais .ent-card conforme necessário -->
+  </div>
+
+
+  <!-- ============================================================
+       BLOCO 6 — BÔNUS ("Ainda Não Acabou")
+       Função: Supera a expectativa criada. Eleva o valor percebido.
+       Psicologia: Surpresa + reciprocidade — "mais do que esperava".
+       Variáveis: BONUS1_NOME, BONUS1_DESC, BONUS1_IMG, BONUS2..N
+       ============================================================ -->
+  <section id="bonus">
+    <p class="bonus-pre">AINDA NÃO ACABOU</p>
+    <h2 class="bonus-title">Você também vai receber…</h2>
+
+    <div class="bonus-card">
+      <div class="bonus-content">
+        <div class="bonus-info">
+          <p class="bonus-name">Manual da {{Transformação}}</p>
+          <p class="bonus-desc">
+            Neste manual você vai receber {{tipo de conteúdo: dicas práticas, estratégias simples, exercícios rápidos}} para {{transformação desejada}} e nunca mais {{dor ou situação negativa que a persona quer evitar}}.
+          </p>
+        </div>
+        <img class="bonus-img" src="bloc-5-6-mockup-produto-entregue.png" alt="Manual da transformação" />
+      </div>
+    </div>
+
+    <div class="bonus-card">
+      <div class="bonus-content">
+        <div class="bonus-info">
+          <p class="bonus-name">Calendário do {{benefício principal}}</p>
+          <p class="bonus-desc">
+            O calendário tem toda sua programação diária, para você {{benefício/resultado principal}} em {{tempo específico}}.
+          </p>
+        </div>
+        <img class="bonus-img" src="bloc-5-6-mockup-produto-entregue.png" alt="Calendário do benefício principal" />
+      </div>
+    </div>
+
+    <div class="bonus-card">
+      <div class="bonus-content">
+        <div class="bonus-info">
+          <p class="bonus-name">Protocolo para {{promessa principal}}</p>
+          <p class="bonus-desc">
+            Um passo a passo prático e comprovado para você {{transformação/resultado principal}}, mesmo que {{objeção/dificuldade comum}}.
+          </p>
+        </div>
+        <img class="bonus-img" src="bloc-5-6-mockup-produto-entregue.png" alt="Protocolo para promessa principal" />
+      </div>
+    </div>
+    <!-- Adicione mais .bonus-card conforme necessário -->
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 7 — PARA QUEM SERVE (Filtro de Audiência)
+       Função: Espelho de identidade. Leitor confirma que é o público certo.
+       Psicologia: Identificação + exclusão intencional aumentam desejo.
+       Variáveis: NOME_PRODUTO, PQ_ITEM_1..6, DESEJO_PERSONA
+       ============================================================ -->
+  <section id="paraquem">
+    <h2 class="pq-title">O <b>{{NOME_PRODUTO}}</b> é para você que:</h2>
+
+    <div class="paraquem-list">
+      <div class="pq-list-items">
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Desejo ou objetivo que a persona tem}};</span>
+        </div>
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Dor ou frustração que a persona enfrenta}};</span>
+        </div>
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Limitação comum que atrapalha}};</span>
+        </div>
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Erro ou perda de dinheiro que costuma acontecer}};</span>
+        </div>
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Promessa clara de benefício desejado}};</span>
+        </div>
+        <div class="pq-item">
+          <span class="pq-check">✅</span>
+          <span>{{Segmento de pessoas que se encaixa no produto}}.</span>
+        </div>
+      </div>
+      <div class="pq-image-placeholder">
+        <img src="bloc-7-transformacao-produto.png" alt="Transformação que o produto proporciona" />
+      </div>
+    </div>
+
+    <p class="pq-enfim">Enfim…</p>
+    <p class="pq-desejo">
+      Se você quer <b>{{DESEJO_PERSONA}}</b>...<br/>
+      O <b>{{NOME_PRODUTO}}</b> é para você!
+    </p>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 8 — RECAPITULANDO (Stack de Valor)
+       Função: Ancora o preço por contraste. Apresenta o "valor real" antes do preço.
+       Psicologia: Ancoragem + contraste de preço — o preço pago parece irrisório.
+       Variáveis: NOME_PRODUTO, RECAP_ITEMS (nome + valor unitário), TOTAL_VALOR, NOME_PRODUTO
+       ============================================================ -->
+  <section id="recapitulando">
+    <p class="recap-pre">RECAPITULANDO…</p>
+    <h2 class="recap-title">Veja tudo que você vai receber no <b>{{NOME_PRODUTO}}</b></h2>
+
+    <div class="recap-stack">
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-name"><span class="check">✅</span>ENTREGÁVEL</span>
+        <span class="recap-dash">--------------------------------------------------------------------</span>
+        <span class="recap-val">147,00</span>
+      </div>
+      <!-- Adicione mais linhas conforme necessário -->
+    </div>
+
+    <p class="recap-deveria">
+      TUDO ISSO DEVERIA CUSTAR:<br/><b>R$ {{TOTAL_VALOR}}</b>
+    </p>
+    <p class="recap-mas">
+      Mas somente hoje você pode ter acesso ao<br/>
+      <b>{{NOME_PRODUTO}}</b> por um valor muito mais acessível!
+    </p>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 9 — VALOR (1º Bloco de Preço)
+       Função: Primeira oferta após stack de valor. Momento de máximo desejo.
+       Psicologia: Contraste + CTA imediato — captura o "comprador quente".
+       Variáveis: MOCKUP_URL, PRECO_PARCELADO, QTDE_PARCELAS, PRECO_VISTA, CHECKOUT_URL, TEXTO_CTA
+       ============================================================ -->
+  <div class="price-section">
+    <div class="price-card">
+      <img class="price-mockup" src="bloc-9-13-todos-mockups-juntos.png" alt="{{NOME_PRODUTO}}" />
+      <p class="price-product">{{NOME_PRODUTO}}</p>
+      <div class="price-right">
+        <p class="price-strike">De R$ {{TOTAL_VALOR}}</p>
+        <img class="price-logo" src="bloc-0-logo-produto.png" alt="Logo do produto" />
+        <p class="price-label">Por apenas:</p>
+        <p class="price-installments">{{QTDE_PARCELAS}}x de {{PRECO_PARCELADO}}</p>
+        <p class="price-cash">ou {{PRECO_VISTA}} à vista</p>
+        <a href="{{CHECKOUT_URL}}" class="btn-cta">{{TEXTO_CTA}}</a>
+        <p class="price-safe">Compra segura</p>
+        <!-- Selos de segurança / garantia -->
+        <img class="price-badges" src="{{SELOS_URL}}" alt="Compra segura" />
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       BLOCO 10 — COMO ACESSAR (Microfunil Pós-Compra)
+       Função: Remove medo do desconhecido. Mostra que é simples.
+       Psicologia: Redução de atrito — "sei o que acontece depois de clicar".
+       Variáveis: ACESSO_PASSO1, ACESSO_PASSO2, ACESSO_PASSO3
+       ============================================================ -->
+  <section id="comoacessar">
+    <h2 class="ca-title">Compre agora e receba seu acesso no e-mail imediatamente!</h2>
+
+    <div class="access-steps">
+      <div class="access-step">
+        <div class="as-num">
+          <span class="as-num-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 6h18v12H3z"></path>
+              <path d="M3 7l9 7 9-7"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="as-title">FAÇA SUA COMPRA</p>
+        <p class="as-desc">Assim que finalizar sua compra, você vai receber seu acesso no email.</p>
+      </div>
+      <div class="access-step">
+        <div class="as-num">
+          <span class="as-num-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4v12"></path>
+              <path d="M7.5 12.5L12 17l4.5-4.5"></path>
+              <path d="M4 20h16"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="as-title">BAIXE TODO O MATERIAL</p>
+        <p class="as-desc">Você vai receber todos os entregáveis junto com os bônus imediatamente.</p>
+      </div>
+      <div class="access-step">
+        <div class="as-num">
+          <span class="as-num-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 7L9.5 17.5 4 12"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="as-title">FAÇA SUA COMPRA</p>
+        <p class="as-desc">Assim que finalizar sua compra, você vai receber seu acesso no email.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 11 — AUTORIDADE (Quem É o Criador)
+       Função: Credibilidade do produto via quem o criou.
+       Psicologia: Autoridade + prova por resultados próprios.
+       Variáveis: NOME_AUTOR, ROLE_AUTOR, FOTO_AUTOR_URL, BIO_AUTOR
+       ============================================================ -->
+  <section id="autoridade">
+    <div class="auth-card">
+      <div class="auth-info">
+        <h2 class="auth-heading"><b>{{NOME_AUTOR}}</b> é o criador do <b>{{NOME_PRODUTO}}</b></h2>
+        <p class="auth-bio">{{BIO_AUTOR}}</p>
+      </div>
+      <img class="auth-photo" src="bloc-11-expert-do-produto.png" alt="{{NOME_AUTOR}}" />
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 12 — CONVERSA SÉRIA (Duas Opções)
+       Função: Forçar a decisão. Tornar custoso NÃO comprar.
+       Psicologia: Contraste de futuros + aversão à perda.
+       Variáveis: NOME_PRODUTO, OPT1_ITEMS (bullets negativos), OPT2_ITEMS (bullets positivos), CHECKOUT_URL, TEXTO_CTA
+       ============================================================ -->
+  <section id="conversa">
+    <h2 class="conv-title">Agora você tem duas opções:</h2>
+
+    <div class="options-row">
+      <div class="option-box opt1">
+        <div class="opt-icon">❌</div>
+        <p class="opt-label">Opção 1</p>
+        <p class="opt-single-text">Continuar sofrendo com {{dor da persona}}</p>
+      </div>
+
+      <div class="option-box opt2">
+        <div class="opt-icon">✅</div>
+        <p class="opt-label">Opção 2</p>
+        <p class="opt-single-text">Continuar sofrendo com {{dor da persona}}</p>
+      </div>
+    </div>
+
+    <p class="conv-conclusion">Eu sei (e você também sabe): a opção 2 é a mais inteligente.</p>
+    <div class="conv-mockups-placeholder">
+      <img src="bloc-9-13-todos-mockups-juntos.png" alt="Todos os mockups juntos" />
+    </div>
+    <p class="conv-cta-text">
+      Então clique no botão abaixo e acesse agora mesmo o <b>{{NOME DO PRODUTO}}</b>
+    </p>
+    <div class="btn-wrapper">
+      <a href="{{CHECKOUT_URL}}" class="btn-cta" style="display:inline-block; width:auto; padding: 18px 48px;">
+        {{TEXTO_CTA}}
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 13 — VALOR (2º Bloco de Preço — Repetição Pós Conversa Séria)
+       Função: Segunda oportunidade para o "comprador convencido".
+       Psicologia: Captura quem foi persuadido pela conversa séria.
+       ============================================================ -->
+  <div class="price-section">
+    <div class="price-card">
+      <img class="price-mockup" src="bloc-9-13-todos-mockups-juntos.png" alt="{{NOME_PRODUTO}}" />
+      <p class="price-product">{{NOME_PRODUTO}}</p>
+      <div class="price-right">
+        <p class="price-strike">De R$ {{TOTAL_VALOR}}</p>
+        <img class="price-logo" src="bloc-0-logo-produto.png" alt="Logo do produto" />
+        <p class="price-label">Por apenas:</p>
+        <p class="price-installments">{{QTDE_PARCELAS}}x de {{PRECO_PARCELADO}}</p>
+        <p class="price-cash">ou {{PRECO_VISTA}} à vista</p>
+        <a href="{{CHECKOUT_URL}}" class="btn-cta">{{TEXTO_CTA}}</a>
+        <p class="price-safe">Compra segura</p>
+        <img class="price-badges" src="{{SELOS_URL}}" alt="Compra segura" />
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       BLOCO 14 — FAQ (Perguntas Frequentes)
+       Função: Remove objeções finais. Resolve dúvidas de compra.
+       Psicologia: Eliminação de risco — reduz a última barreira antes da compra.
+       Variáveis: FAQ_Q1/FAQ_A1 .. FAQ_QN/FAQ_AN
+       ============================================================ -->
+  <section id="faq">
+    <h2 class="faq-title">Perguntas Frequentes</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          {{FAQ_Q1}} <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">{{FAQ_A1}}</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          {{FAQ_Q2}} <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">{{FAQ_A2}}</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          {{FAQ_Q3}} <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">{{FAQ_A3}}</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          {{FAQ_Q4}} <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">{{FAQ_A4}}</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          {{FAQ_Q5}} <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-answer">{{FAQ_A5}}</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BLOCO 15 — RODAPÉ
+       Função: Compliance legal + contato. Reduz risco percebido.
+       Variáveis: CONTATO_EMAIL, CNPJ, ESTADO, ANO, DISCLAIMER
+       ============================================================ -->
+  <footer id="rodape">
+    <p class="rodape-text">
+      TERMOS DE USO E POLÍTICA DE PRIVACIDADE | DISCLOSURE Copyright © {{Nome do Autor/Empresa}} – {{Nome da Marca/Negócio}} – {{Ano}}
+    </p>
+    <p class="rodape-copy">
+      Este site não é afiliado ao Facebook ou a qualquer entidade do Facebook. Depois que você sair do Facebook, a responsabilidade não é deles e sim do nosso site. A compra desse material não garante nenhum tipo de resultado. Fazemos todos os esforços para indicar claramente e mostrar todas as provas do produto e usamos resultados reais de alunos.
+    </p>
+  </footer>
+
+
+  <!-- ============================================================
+       SCRIPT — FAQ Accordion
+       ============================================================ -->
+  <script>
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Fecha todos
+      document.querySelectorAll('.faq-question').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      // Abre o clicado (se não estava aberto)
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        answer.classList.add('open');
+      }
+    }
+  </script>
+
+</body>
+</html>
