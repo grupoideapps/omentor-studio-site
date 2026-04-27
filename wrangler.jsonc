@@ -4,7 +4,11 @@
   "compatibility_date": "2026-04-26",
   "routes": [
     {
-      "pattern": "omentor.studio/a-maquina*",
+      "pattern": "omentor.studio/*",
+      "zone_name": "omentor.studio"
+    },
+    {
+      "pattern": "www.omentor.studio/*",
       "zone_name": "omentor.studio"
     }
   ],
